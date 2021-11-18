@@ -1,0 +1,50 @@
+﻿@model ConnectionLibrary.Model.Result
+<input type="hidden" id="hdnBtotal" name="BTotal" value="@Model.BTotal" />
+@if (Model.ViewBethakvasti != null && Model.ViewBethakvasti.Count > 0)
+{
+    <table class="table table-bordered" id="example2">
+        <thead class="m-head">
+            <tr>
+                <th>વસ્તી </th>
+                <th style="width: 15%;">Select</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ViewBethakvasti != null && Model.ViewBethakvasti.Count > 0)
+            {
+                foreach (var item in Model.ViewBethakvasti)
+                {
+                <tr>
+                    <td>@item.Vasti</td>
+                    <td>
+                        <input type="checkbox" id="@item.VastiID" checked="@(item.Active.ToString()=="0"? false:true)"  /></td>
+
+                </tr>
+                                            
+                }
+            }
+        </tbody>
+    </table>
+  
+}
+<script type="text/javascript">
+   
+     var chkcount = parseInt($('#txtTW_VastiBethak').val());
+    //var chkcount = 0;
+   // alert($('#txtTW_VastiBethak').val());
+    $('#example2 input:checkbox').change(function () {
+        // alert('hi');
+        //$(this).prop('checked', true);
+        if (this.checked) {
+            chkcount++;
+
+        }
+        else {
+            chkcount--;
+        }
+        $('#txtTW_VastiBethak').val(chkcount);
+    });
+    /**/
+</script>

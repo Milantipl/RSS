@@ -1,0 +1,66 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    var vastiTotal = 0; var karyyuktTotal = 0; var SamparkitTotal = 0; var TotalShakha = 0; var TotalMilan = 0;
+    foreach (ConnectionLibrary.Model.DashboardCounts item in Model.DashboardCountList)
+    {
+        vastiTotal = vastiTotal + item.TotalVasti;
+        karyyuktTotal = karyyuktTotal + item.Karyayukt;
+        SamparkitTotal = SamparkitTotal + item.Samparkit;
+        TotalShakha = TotalShakha + item.TotalShakha;
+        TotalMilan = TotalMilan + item.TotalMilan;
+    }
+}
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+            <div class="inner">
+                <p>કુલ વસ્તી</p>
+               <a href="@Url.Action("Vasti", "Master")"> <h3>@vastiTotal</h3></a>
+            </div>
+            <div class="icon">
+                <i class="fa fa-chart-bar"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+            <div class="inner">
+                <p>કાર્યયુક્ત વસ્તી </p>
+                <h3>@karyyuktTotal</h3>
+            </div>
+            <div class="icon">
+                <i class="fa fa-chart-bar"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <p>સંપર્કિત વસ્તી</p>
+                <h3>@SamparkitTotal</h3>
+            </div>
+            <div class="icon">
+                <i class="fa fa-chart-bar"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <p>શાખા / મિલન </p>
+                <h3> <a href="@Url.Action("Shakha", "Master")">@TotalShakha</a>/<a href="@Url.Action("Milan", "Master")">@TotalMilan</a></h3>
+            </div>
+            <div class="icon">
+                <i class="fa fa-chart-bar"></i>
+            </div>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>

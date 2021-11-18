@@ -1,0 +1,13 @@
+﻿@model ConnectionLibrary.Model.Result
+
+@if (Model.ListNagar != null)
+{
+    @Html.DropDownListFor(x => Model.NagarID, new SelectList(Model.ListNagar, "NagarID", "Nagar"), htmlAttributes: new { @class = "form-control", id = "drpNagar" })
+}
+else
+{
+    <select class="form-control" id="drpNagar">
+        <option value="0">--Select Nagar---</option>
+        @*  *@
+    </select>
+}

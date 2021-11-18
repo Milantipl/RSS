@@ -1,0 +1,332 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">વપરાશકર્તા</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Master")">Home</a></li>
+                        <li class="breadcrumb-item active">વપરાશકર્તા</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <form id="frmrss">
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                @*<div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Search</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ભાગ:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-info"><i class="fa fa-search mr-1"></i>Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+               
+                    <!-- /.card-header -->
+                    <div id="Datalist">
+                        @Html.Partial("~/Views/Shared/Partial/_ViewUser.cshtml", Model)
+
+                    </div>
+
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header py-2">
+                                    <h4 class="modal-title">Add New user</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-4 text-right col-form-label">નામ: <span style="color: red;">*</span></label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="Username" id="txtUsername" />
+                                                    <input type="hidden" id="hdnRoleWiseDept" name="RoleWiseDept">
+                                                     <input type="hidden" id="hdnLoginId" name="LoginId">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-4 text-right col-form-label">મોબાઈલ નમ્બર:<span style="color: red;">*</span></label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" name="MobileNo" id="txtMobileNo" maxlength="10" onkeypress="return isNumberKey(event)" />
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-4 text-right col-form-label">વપરાશકર્તા પ્રકાર: <span style="color: red;">*</span></label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="ddlUserType" name="Roleid">
+                                                        <option value="0">Select Any</option>
+                                                        <option value="2">Vibhag Admin</option>
+                                                        <option value="3">Bhag Admin</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="display: none" id="divVibhag">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-4 text-right col-form-label">વિભાગ</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(x => Model.VibhagID, new SelectList(Model.ListVibhag, "VibhagID", "Vibhag"), htmlAttributes: new { @class = "form-control", id = "drpVibhag" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" style="display: none" id="divbhag">
+                                            <div class="form-group row">
+                                                <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ભાગ</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(x => Model.BhagID, new SelectList(Model.ListBhag, "BhagID", "Bhag"), htmlAttributes: new { @class = "form-control", id = "drpBhag" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-center">
+                                            <input type="button" id="btnSave" class="btn btn-info" value="Submit">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+              
+                <!-- /.card -->
+            </div>
+            <!-- /.container-fluid -->
+        </form>
+    </section>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+        $(document).ready(function () {
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+            $("#CreateUser").addClass("nav-link active");
+            $("#Setting").addClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#Settingli").addClass("nav-item menu-open");
+            $('#ddlUserType').change(function () {
+                //alert($('#drpSearchBhag option:selected').val());
+                if ($('#ddlUserType option:selected').val() != "0") {
+                    if ($('#ddlUserType').val() == "2") {
+                        $('#divVibhag').css("display", 'block');
+                        $('#divbhag').css("display", 'none');
+
+                    }
+                    else if ($('#ddlUserType').val() == "3") {
+                        $('#divbhag').css("display", 'block');
+                        $('#divVibhag').css("display", 'none');
+                    }
+                }
+                else {
+                    $('#divbhag').css("display", 'none');
+                    $('#divVibhag').css("display", 'none');
+                }
+            });
+        });
+        $('#drpBhag').change(function () {
+            
+            if ($('#drpBhag option:selected').val() != "0") {
+                $("#hdnRoleWiseDept").val($('#drpBhag option:selected').val());
+               // alert($("#hdnRoleWiseDept").val());
+            }
+        });
+        $('#drpVibhag').change(function () {
+            
+            if ($('#drpVibhag option:selected').val() != "0") {
+                $("#hdnRoleWiseDept").val($('#drpVibhag option:selected').val());
+                //alert($("#hdnRoleWiseDept").val());
+            }
+        });
+        $("#btnSave").click(function () {
+           
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#ddlUserType").val() == "0") {
+                    toastr.error("Please Select UserType");
+                    $("#ddlUserType").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#txtMobileNo").val() == "") {
+                    toastr.error("Please Enter MobileNo");
+                    $("#txtMobileNo").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtMobileNo").val().length < 10) {
+                    toastr.error("Please Enter 10 digit MobileNo");
+                    $("#txtMobileNo").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtUsername").val() == "") {
+                    toastr.error("Please Enter User Name");
+                    $("#txtUsername").focus();
+                    TValidate = false;
+                }
+
+            } 
+            if (TValidate) {
+                if ($("#hdnRoleWiseDept").val() == "") {
+                    toastr.error("Please Enter Bhag/Vibhag");
+
+                    TValidate = false;
+                }
+
+            }
+            //drpSevaUP
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Account/InsertUser",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+                        else if (data == "0") {
+                            toastr.error("No Records Found");
+                        }
+                        else {
+
+                            $("#Datalist").html(data);
+                            //$("#myModal").css("display", "none");
+                            toastr.info("Record Save Successfully!!");
+                            Clear();
+
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+        function Clear() {
+            $("#hdnRoleWiseDept").val('');
+            $("#hdnLoginId").val('');
+            $("#txtUsername").val('');
+            $("#txtMobileNo").val('');
+            $("#ddlUserType").val('0');
+            $("#drpVibhag").val('0');
+            $("#drpBhag").val('0');
+        }
+        function Delete(LoginId) {
+            //alert('hi');
+            $.ajax({
+                type: "GET",
+                url: "/Account/DeleteUser/",
+                data: { LoginId: LoginId },
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+                        toastr.error("No Records Found");
+                    }
+                    else {
+                        $("#Datalist").html(data);
+                        toastr.info("Record Deleted Sucessfully!!")
+                    }
+
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+        }
+        function Update(LoginId,Username,MobileNo,Roleid,RoleWiseDept) {
+            //alert(RoleWiseDept);
+            $("#hdnLoginId").val(LoginId);
+            $("#hdnRoleWiseDept").val(RoleWiseDept); 
+            
+            $("#txtUsername").val(Username);
+            $("#txtMobileNo").val(MobileNo);
+            $("#ddlUserType").val(Roleid);
+            if (RoleWiseDept != "") {
+                if (Roleid == "2") {
+                    $("#drpVibhag").val(RoleWiseDept);
+                    $('#divbhag').css("display", 'none');
+                    $('#divVibhag').css("display", 'block');
+                }
+                else if (Roleid == "3") {
+                    $("#drpBhag").val(RoleWiseDept);
+                    $('#divbhag').css("display", 'block');
+                    $('#divVibhag').css("display", 'none');
+                }
+            }
+            else {
+                $('#divbhag').css("display", 'none');
+                $('#divVibhag').css("display", 'none');
+            }
+        }
+    </script>
+}

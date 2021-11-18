@@ -1,0 +1,49 @@
+﻿@model ConnectionLibrary.Model.Result
+
+@{
+    var Count = 0;
+}
+@if (Model.Report13List != null && Model.Report13List.Count > 0)
+{
+    Count=Count+1;
+    foreach (var item in Model.Report13List)
+    {
+      
+    <div class="card card-info" style="margin-bottom:900px !important;">
+       
+        <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 1rem; color: #000000; background-color: transparent; margin-bottom: 0; text-align: center;">
+
+            <tbody>
+                <tr style="background-color: #28a745 !important; color: #fff;">
+                    <td colspan="4" style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-bottom: none; vertical-align: middle;">ભાગ - @item.Bhag
+                    </td>
+                </tr>
+                <tr style="background-color: #28a745 !important; color: #fff;">
+                    <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-bottom: none; vertical-align: middle;">નગર</td>
+
+                    <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-bottom: none; vertical-align: middle;">કાર્યયુક્ત વસ્તી</td>
+                    <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-bottom: none; vertical-align: middle;">સંપર્કિત વસ્તી</td>
+                    <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-bottom: none; vertical-align: middle;">કાર્યવિહીન વસ્તી</td>
+                </tr>
+
+                @foreach (var Listvasti in item.ListReport13)
+                {
+                    <tr>
+                        <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-top: none">@Listvasti.Nagar</td>
+
+                        <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-top: none">@Listvasti.KaryYuktVasti</td>
+                        <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right: none; border-top: none">@Listvasti.SamparkitVasti</td>
+                        <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-top: none">@Listvasti.KaryVihinVasti</td>
+                    </tr>
+                
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+}
+
+
+
+
+

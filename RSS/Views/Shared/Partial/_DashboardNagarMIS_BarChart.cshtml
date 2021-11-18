@@ -1,0 +1,91 @@
+﻿            
+<script src="~/Content/dist/js/jquery.js"></script>
+<script>
+
+    jQuery.noConflict();
+
+    jQuery(document).ready(function () {
+
+        //-------------
+        //- BAR CHART -
+        //-------------
+
+           var NagarBarData = {
+               labels: ["2013","2014","2015","2016","2017","2018"],
+               datasets: [
+                 {
+                     fillColor: "rgba(210, 214, 222, 1)",
+                     strokeColor: "rgba(210, 214, 222, 1)",
+                     pointColor: "rgba(210, 214, 222, 1)",
+                     pointStrokeColor: "#3e95cd",
+                     pointHighlightFill: "#fff",
+                     pointHighlightStroke: "rgba(220,220,220,1)",
+                     data: [10,30,40,45,56,48]
+                 }
+               ]
+           };
+
+           var NagarBarChartCanvas = jQuery("#NagarBarChart").get(0).getContext("2d");
+           var NagarBarChart = new Chart(NagarBarChartCanvas);
+           var NagarBarChartData = NagarBarData;
+           NagarBarChartData.datasets[0].fillColor = "#00a65a";
+           NagarBarChartData.datasets[0].strokeColor = "#00a65a";
+           NagarBarChartData.datasets[0].pointColor = "#00a65a";
+           var NagarBarChartOptions = {
+               //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+               scaleBeginAtZero: true,
+               //Boolean - Whether grid lines are shown across the chart
+               scaleShowGridLines: true,
+               //String - Colour of the grid lines
+               scaleGridLineColor: "rgba(0,0,0,.05)",
+               //Number - Width of the grid lines
+               scaleGridLineWidth: 1,
+               //Boolean - Whether to show horizontal lines (except X axis)
+               scaleShowHorizontalLines: true,
+               //Boolean - Whether to show vertical lines (except Y axis)
+               scaleShowVerticalLines: true,
+               //Boolean - If there is a stroke on each bar
+               barShowStroke: true,
+               //Number - Pixel width of the bar stroke
+               barStrokeWidth: 2,
+               //Number - Spacing between each of the X value sets
+               barValueSpacing: 5,
+               //Number - Spacing between data sets within X values
+               barDatasetSpacing: 1,
+               //String - A legend template
+               legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+               //Boolean - whether to make the chart responsive
+               responsive: true,
+               maintainAspectRatio: true,
+               showTooltips: true
+               //onAnimationComplete: function () {
+
+               //    var ctx = NagarBarChartCanvas;
+               //    ctx.font = this.scale.font;
+               //    ctx.fillStyle = this.scale.textColor
+               //    ctx.textAlign = "center";
+               //    ctx.textBaseline = "bottom";
+
+               //    this.datasets.forEach(function (dataset) {
+               //        dataset.bars.forEach(function (bar) {
+               //            NagarBarChartCanvas.fillText(bar.value, bar.x, bar.y - 5);
+               //        });
+               //    })
+               //}
+           };
+
+           NagarBarChartOptions.datasetFill = false;
+           NagarBarChart.Bar(NagarBarChartData, NagarBarChartOptions);
+
+
+
+
+    });
+    </script>
+@* <img src="~/Content/dist/img/bar.jpg" class="img-responsive col-md-12" />*@
+<div class="img-responsive col-md-12">
+                            <canvas id="NagarBarChart" style="height: 310px; width: 520px;" height="310" width="520"></canvas>
+                        </div>
+
+
+

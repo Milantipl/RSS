@@ -1,0 +1,35 @@
+﻿@model ConnectionLibrary.Model.Result
+
+@if (Model.Report10List != null && Model.Report10List.Count > 0)
+{
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 1rem; color: #000000; background-color: transparent; margin-bottom: 0; text-align: center;">
+        
+            <tr style="background-color: #28a745 !important; color: #fff;">
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">બંધ શાખા</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">૧-૩ ઉપસ્થિતિ</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">૪ - ૯ ઉપસ્થિતિ</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">૧૦ થી વધુ ઉપસ્થિતિ</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-bottom:none; vertical-align: middle;">કુલ શાખા</td>
+            </tr>
+        
+        
+            @foreach (ConnectionLibrary.Model.Reports.Report10 item in Model.Report10List)
+            {
+                <tr>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Nagar</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.BandhShakha</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.oneToThreeTotal</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.FourToNineTotal</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Above10Total</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-top:none">@item.TotalShakha</td>
+                </tr>
+            }
+        
+    </table>
+}
+
+
+
+
+

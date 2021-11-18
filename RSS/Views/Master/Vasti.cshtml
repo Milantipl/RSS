@@ -1,0 +1,158 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "Vasti";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">વસ્તી</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Master")">Home</a></li>
+                        <li class="breadcrumb-item active">વસ્તી</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <form id="frmrss">
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Search</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 text-right col-form-label">ભાગ: <span style="color: red;">*</span></label>
+                                    <div class="col-sm-10">
+                                        @Html.DropDownListFor(x => Model.BhagID, new SelectList(Model.ListBhag, "BhagID", "Bhag"), htmlAttributes: new { @class = "form-control", id = "drpBhag" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-2 text-right col-form-label">નગર:</label>
+                                    <div class="col-sm-10">
+                                        <div id="Droplist">
+
+                                            @Html.Partial("~/Views/Shared/Partial/_DDLNagar.cshtml", Model)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <input type="button" id="btnSearch" class="btn btn-info" value="Search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="Datalist">
+                    @Html.Partial("~/Views/Shared/Partial/_ViewVasti.cshtml", Model)
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.container-fluid -->
+        </form>
+    </section>
+</div>
+<!-- /.content-wrapper -->
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+            $("#Vasti").addClass("nav-link active");
+            $("#Master").addClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#Masterli").addClass("nav-item menu-open");
+        });
+        $('#drpBhag').change(function () {
+            //alert($('#drpBhag option:selected').val());
+            if ($('#drpBhag option:selected').val() != "0") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/NagarByBhagID",
+                    data: { BhagID: $('#drpBhag option:selected').val() },
+                    timeout: 600000,
+                    success: function (data) {
+
+                        if (data == "0") {
+
+                            toastr.error("Record Not Found!! ");
+
+                        }
+                        else {
+                            $("#Droplist").html(data);
+
+                        }
+
+                    },
+                });
+            }
+
+        });
+
+        $("#btnSearch").click(function () {
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpBhag").val() == "0") {
+                    toastr.error("Please Select Bhag");
+                    $("#drpBhag").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/SearchVasti",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+
+                        if (data == "0") {
+
+                            toastr.error("Record Not Found!! ");
+
+                        }
+                        else {
+                            $("#Datalist").html(data);
+
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+    </script>
+}

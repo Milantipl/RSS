@@ -1,0 +1,14 @@
+﻿@model ConnectionLibrary.Model.Result
+
+<select class="form-control" id="drpVasti" name="VastiID" onchange="Binddata(this);">
+    @if (Model.ListVasti != null && Model.ListVasti.Count > 0)
+    {
+        <option value="@Model.ListVasti.FirstOrDefault().VastiID" selected="selected">@Model.ListVasti.FirstOrDefault().Vasti</option>
+    }
+</select>
+
+
+
+
+
+

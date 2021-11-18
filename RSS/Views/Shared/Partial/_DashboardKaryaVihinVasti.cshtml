@@ -1,0 +1,24 @@
+﻿@model ConnectionLibrary.Model.Result
+@if (Model.DashboardNivasiKaryakartaList != null && Model.DashboardNivasiKaryakartaList.Count > 0)
+{
+    <table class="table table-bordered">
+        <thead class="m-head">
+            <tr>
+                <th>કાર્યકર્તા</th>
+                <th>વસ્તી</th>
+                <th>નગર </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ConnectionLibrary.Model.DashboardNivasikaryakarta item in Model.DashboardNivasiKaryakartaList)
+            {
+                <tr>
+                    <td>@item.karyakartaName</td>
+                    <td>@item.TotalVasti</td>
+                    <td>@item.TotalNagar</td>
+                </tr>
+                                   
+            }
+        </tbody>
+    </table>
+}

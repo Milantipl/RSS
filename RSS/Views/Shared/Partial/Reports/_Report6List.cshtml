@@ -1,0 +1,30 @@
+﻿@model ConnectionLibrary.Model.Result
+
+@if (Model.Report6List != null && Model.Report6List.Count > 0)
+{
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 1rem; color: #000000; background-color: transparent; margin-bottom: 0; text-align: center;">
+        
+            <tr style="background-color: #28a745 !important; color: #fff;">
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર </td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર બૌદ્ધિક વર્ગ થયો</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર અભ્યાસ વર્ગ થયા</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-bottom:none; vertical-align: middle;">નગર માસિક એકત્રીકરણ થયું</td>
+            </tr>
+       
+            @foreach (ConnectionLibrary.Model.Reports.Report6 item in Model.Report6List)
+            {
+                <tr>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Nagar</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Bvarg</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.AbyasVarg</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-top:none">@item.Ektrikaran</td>
+                </tr>
+            }
+        
+    </table>
+}
+
+
+
+
+

@@ -1,0 +1,29 @@
+﻿@model ConnectionLibrary.Model.Result
+
+@if (Model.Report7List != null && Model.Report7List.Count > 0)
+{
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 1rem; color: #000000; background-color: transparent; margin-bottom: 0; text-align: center;">
+        
+            <tr style="background-color: #28a745 !important; color: #fff;">
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર </td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર કાર્યકારીણી બેઠક થઇ?</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-bottom:none; vertical-align: middle;">નગર વિસ્તૃત બેઠક થઇ?</td>
+            </tr>
+        
+        
+            @foreach (ConnectionLibrary.Model.Reports.Report7 item in Model.Report7List)
+            {
+                <tr>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Nagar</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.SW_KarykariniBethak</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-top:none">@item.FW_VistrutBethak</td>
+                </tr>
+            }
+        
+    </table>
+}
+
+
+
+
+

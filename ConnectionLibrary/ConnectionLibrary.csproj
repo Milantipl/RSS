@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B2D555D5-F4EF-4BBE-A399-DC625D06305B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ConnectionLibrary</RootNamespace>
+    <AssemblyName>ConnectionLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonFunction.cs" />
+    <Compile Include="ConnectionClass.cs" />
+    <Compile Include="Model\DashboardBandhShakha.cs" />
+    <Compile Include="Model\DashboardCounts.cs" />
+    <Compile Include="Model\DashboardNivasikaryakarta.cs" />
+    <Compile Include="Model\Reports\ListofReport13.cs" />
+    <Compile Include="Model\Reports\Report13.cs" />
+    <Compile Include="Model\Reports\MilanReport.cs" />
+    <Compile Include="Model\Reports\NoBethakVastiReport.cs" />
+    <Compile Include="Model\Reports\Report1.cs" />
+    <Compile Include="Model\Reports\Report10.cs" />
+    <Compile Include="Model\Reports\Report11.cs" />
+    <Compile Include="Model\Reports\Report12.cs" />
+    <Compile Include="Model\Reports\Report2.cs" />
+    <Compile Include="Model\Reports\Report3.cs" />
+    <Compile Include="Model\Reports\Report4.cs" />
+    <Compile Include="Model\Reports\Report5.cs" />
+    <Compile Include="Model\Reports\Report6.cs" />
+    <Compile Include="Model\Reports\Report7.cs" />
+    <Compile Include="Model\Reports\Report8.cs" />
+    <Compile Include="Model\Reports\Report9.cs" />
+    <Compile Include="Model\Reports\ShakhaReport.cs" />
+    <Compile Include="Model\_Bethak.cs" />
+    <Compile Include="Model\_BethakVasti.cs" />
+    <Compile Include="Model\_Dayitva_Mast.cs" />
+    <Compile Include="Model\_Login_Mast.cs" />
+    <Compile Include="Model\_MilanUPVrut.cs" />
+    <Compile Include="Model\_Month.cs" />
+    <Compile Include="Model\_NagarVrut.cs" />
+    <Compile Include="Model\_Pravasi_Karyakarta.cs" />
+    <Compile Include="Model\_Sevavasti.cs" />
+    <Compile Include="Model\_Milan.cs" />
+    <Compile Include="Model\Pager.cs" />
+    <Compile Include="Model\_Shakha.cs" />
+    <Compile Include="Model\_Bhag.cs" />
+    <Compile Include="Model\_Sevakary.cs" />
+    <Compile Include="Model\MemberOTPDetail.cs" />
+    <Compile Include="Model\_MilanType.cs" />
+    <Compile Include="Model\_Nagar.cs" />
+    <Compile Include="Model\Result.cs" />
+    <Compile Include="Model\_Shakhatime_Mast.cs" />
+    <Compile Include="Model\_ShakhaType.cs" />
+    <Compile Include="Model\_ShakhaUPVrut.cs" />
+    <Compile Include="Model\_Star_Mast.cs" />
+    <Compile Include="Model\_Vasti.cs" />
+    <Compile Include="Model\_Vibhag.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AccountRepository.cs" />
+    <Compile Include="Repository\MasterRepository.cs" />
+    <Compile Include="Repository\ReportRepository.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

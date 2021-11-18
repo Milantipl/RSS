@@ -1,0 +1,135 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    var SayuktVidhyarthiTotal = 0; var VidhyarthiTotal = 0; var ProudhVyavsayiTotal = 0; var TarunVidhyarthiTotal = 0; var YogTotal = 0;
+    var PalakYuktShakhaTotal = 0; var Total = 0; var SMSayuktVidhyarthiTotal = 0; var SMTarunVidhyarthiTotal = 0; var SMProudhVyavsayiTotal = 0; var SMTarunVyavsayiTotal = 0;
+    var NTarunTotal = 0; var NBalTotal = 0; var NYogTotal = 0; var NShishuTotal = 0; var TotalNagarTotal = 0; var TotalBethakTotal = 0; var BvargTotal = 0;
+    var BvargUPTotal = 0; var AbyasVargTotal = 0; var ApekshitTotal = 0; var UpsthitTotal = 0; var TotalShakhaTotal = 0;
+}
+
+
+@if (Model.Report2List.Count > 0)
+{
+    <table class="table table-bordered text-center mb-0">
+    <thead>
+        <tr class="bg-primary">
+            <th class="align-middle" rowspan="2">ક્રમ</th>
+            <th class="align-middle" rowspan="2">ભાગ </th>
+            <th class="align-middle" colspan="5">ટોળીયુક્ત શાખા</th>
+            <th class="align-middle" rowspan="2">પાલક યુક્ત શાખા</th>
+            <th class="align-middle" colspan="5">સાપ્તાહિક મિલન</th>
+            <th class="align-middle" colspan="4">માસિક નગર એકત્રીકરણ ની ઉપસ્થિતિ</th>
+            <th class="align-middle" rowspan="2">સાપ્તાહિક બેઠક કરનાર નગર</th>
+            <th class="align-middle" rowspan="2">નગર માં સાપ્તા.</th>
+            <th class="align-middle" rowspan="2">કેટલા નગર માં બૌદ્ધિક વર્ગ થયા</th>
+            <th class="align-middle" rowspan="2">બૌદ્ધિક વર્ગ માં ઉપસ્થિતિ</th>
+            <th class="align-middle" colspan="3">નગર અભ્યાસ વર્ગની ઉપસ્થિતિ </th>
+            <th class="align-middle" rowspan="2">કેટલા નગર માં અભ્યાસ વર્ગ થયા</th>
+        </tr>
+        <tr class="bg-success">
+            <th class="align-middle">સંયુક્ત વિધાર્થી</th>
+            <th class="align-middle">વિદ્યાર્થી</th>
+            <th class="align-middle">પ્રૌઢ વ્યવસાયી</th>
+            <th class="align-middle">તરુણ વ્યવસાયી</th>
+            <th class="align-middle">યોગ</th>
+            <th class="align-middle">કુલ</th>
+            <th class="align-middle">સંયુક્ત વિધાર્થી</th>
+            <th class="align-middle">તરુણ વિધાર્થી</th>
+            <th class="align-middle">પ્રૌઢ વ્યવસાયી</th>
+            <th class="align-middle">તરુણ વ્યવસાયી</th>
+            <th class="align-middle">તરુણ</th>
+            <th class="align-middle">બાલ</th>
+            <th class="align-middle">યોગ</th>
+            <th class="align-middle">શીશુ</th>
+            <th class="align-middle">ઉપ. શાખા</th>
+            <th class="align-middle">અપે. સંખ્યા</th>
+            <th class="align-middle">ઉપ. સંખ્યા</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ConnectionLibrary.Model.Reports.Report2 item in Model.Report2List)
+        {
+            <tr>
+                <td>@item.SrNo</td>
+                <td>@item.Bhag</td>
+                <td>@item.SayuktVidhyarthi</td>
+                <td>@item.Vidhyarthi</td>
+                <td>@item.ProudhVyavsayi</td>
+                <td>@item.TarunVidhyarthi</td>
+                <td>@item.Yog</td>
+                <td>@item.PalakYuktShakha</td>
+                <td>@item.Total</td>
+                <td>@item.SMSayuktVidhyarthi</td>
+                <td>@item.SMTarunVidhyarthi</td>
+                <td>@item.SMProudhVyavsayi</td>
+                <td>@item.SMTarunVyavsayi</td>
+                <td>@item.NTarun</td>
+                <td>@item.NBal</td>
+                <td>@item.NYog</td>
+                <td>@item.NShishu</td>
+                <td>@item.TotalNagar</td>
+                <td>@item.TotalBethak</td>
+                <td>@item.Bvarg</td>
+                <td>@item.BvargUP</td>
+                <td>@item.AbyasVarg</td>
+                <td>@item.Apekshit</td>
+                <td>@item.Upsthit</td>
+                <td>@item.TotalShakha</td>
+            </tr>
+            {
+                SayuktVidhyarthiTotal = SayuktVidhyarthiTotal + item.SayuktVidhyarthi;
+                VidhyarthiTotal = VidhyarthiTotal + item.Vidhyarthi;
+                ProudhVyavsayiTotal = ProudhVyavsayiTotal + item.ProudhVyavsayi;
+                TarunVidhyarthiTotal = TarunVidhyarthiTotal + item.TarunVidhyarthi;
+                YogTotal = YogTotal + item.Yog;
+                PalakYuktShakhaTotal = PalakYuktShakhaTotal + item.PalakYuktShakha;
+                Total = Total + item.Total;
+                SMSayuktVidhyarthiTotal = SMSayuktVidhyarthiTotal + item.SMSayuktVidhyarthi;
+                SMTarunVidhyarthiTotal = SMTarunVidhyarthiTotal + item.SMTarunVidhyarthi;
+                SMProudhVyavsayiTotal = SMProudhVyavsayiTotal + item.SMProudhVyavsayi;
+                SMTarunVyavsayiTotal = SMTarunVyavsayiTotal + item.SMTarunVyavsayi;
+                NTarunTotal = NTarunTotal + item.NTarun;
+                NBalTotal = NBalTotal + item.NBal;
+                NYogTotal = NYogTotal + item.NYog;
+                NShishuTotal = NShishuTotal + item.NShishu;
+                TotalNagarTotal = TotalNagarTotal + item.TotalNagar;
+                TotalBethakTotal = TotalBethakTotal + item.TotalBethak;
+                BvargTotal = BvargTotal + item.Bvarg;
+                BvargUPTotal = BvargUPTotal + item.BvargUP;
+                AbyasVargTotal = AbyasVargTotal + item.AbyasVarg;
+                ApekshitTotal = ApekshitTotal + item.Apekshit;
+                UpsthitTotal = UpsthitTotal + item.Upsthit;
+                TotalShakhaTotal = TotalShakhaTotal + item.TotalShakha;
+            }
+        }
+    </tbody>
+    <tfoot class="bg-warning">
+        <tr>
+            <td colspan="2">યોગ</td>
+            <td>@SayuktVidhyarthiTotal</td>
+            <td>@VidhyarthiTotal</td>
+            <td>@ProudhVyavsayiTotal</td>
+            <td>@TarunVidhyarthiTotal</td>
+            <td>@YogTotal</td>
+            <td>@PalakYuktShakhaTotal</td>
+            <td>@Total</td>
+            <td>@SMSayuktVidhyarthiTotal</td>
+            <td>@SMTarunVidhyarthiTotal</td>
+            <td>@SMProudhVyavsayiTotal</td>
+            <td>@SMTarunVyavsayiTotal</td>
+            <td>@(NTarunTotal / Model.Report2List.Count)</td>
+            <td>@(NBalTotal / Model.Report2List.Count)</td>
+            <td>@(NYogTotal / Model.Report2List.Count)</td>
+            <td>@(NShishuTotal / Model.Report2List.Count)</td>
+            <td>@TotalNagarTotal</td>
+            <td>@TotalBethakTotal</td>
+            <td>@BvargTotal</td>
+            <td>@(BvargUPTotal / Model.Report2List.Count)</td>
+            <td>@AbyasVargTotal</td>
+            <td>@(ApekshitTotal / Model.Report2List.Count)</td>
+            <td>@(UpsthitTotal / Model.Report2List.Count)</td>
+            <td>@TotalShakhaTotal</td>
+        </tr>
+    </tfoot>
+</table>
+}
+

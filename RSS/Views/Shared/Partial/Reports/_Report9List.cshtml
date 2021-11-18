@@ -1,0 +1,31 @@
+﻿@model ConnectionLibrary.Model.Result
+
+@if (Model.Report9List != null && Model.Report9List.Count > 0)
+{
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 1rem; color: #000000; background-color: transparent; margin-bottom: 0; text-align: center;">
+        
+            <tr style="background-color: #28a745 !important; color: #fff;">
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">કુલ વસ્તી</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">બેઠક થયેલ વસ્તી</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-bottom:none; vertical-align: middle;">બેઠક ન થઇ હોય તેવી વસ્તી</td>
+            </tr>
+        
+        
+            @foreach (ConnectionLibrary.Model.Reports.Report9 item in Model.Report9List)
+            {
+                <tr>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Nagar</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.TotalVasti</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.BethakVasti</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-top:none">@item.NotBethakinString</td>
+                </tr>
+            }
+        
+    </table>
+}
+
+
+
+
+

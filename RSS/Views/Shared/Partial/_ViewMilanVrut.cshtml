@@ -1,0 +1,59 @@
+﻿@model ConnectionLibrary.Model.Result
+<input type="hidden" id="hdnMtotal" name="MTotal" value="@Model.Total" />
+@if (Model.ViewMilanUPVrut != null && Model.ViewMilanUPVrut.Count > 0)
+{
+    <table class="table table-bordered" id="tblMilan">
+        <thead class="m-head">
+            <tr>
+                <th>મિલન </th>
+                <th style="width: 15%;">તરુણ <span style="color: red;">*</span></th>
+                <th style="width: 15%;">બાલ <span style="color: red;">*</span></th>
+                <th style="width: 15%;">યોગ</th>
+                <th style="width: 15%;">શિશુ <span style="color: red;">*</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ViewMilanUPVrut != null && Model.ViewMilanUPVrut.Count > 0)
+            {
+                foreach (var item in Model.ViewMilanUPVrut)
+                {
+                <tr>
+                    <td>@item.MilanName</td>
+                    <td>
+                        <input type="text" class="form-control" id="txtM_Tarun_@item.MilanID" name="M_Tarun" value="@item.M_Tarun" onkeypress="return isNumberKey(event)" onchange="javascript: Sum('txtM_Tarun_@item.MilanID','txtM_Bal_@item.MilanID','txtM_Yog_@item.MilanID');"  />
+                        <input type="hidden"  id="hdnMVVID" name="MVID"  value="@item.MVID" /></td>
+                    <td>
+                        <input type="text" class="form-control" id="txtM_Bal_@item.MilanID" name="M_Bal" value="@item.M_Bal" onkeypress="return isNumberKey(event)" onchange="javascript: Sum('txtM_Tarun_@item.MilanID','txtM_Bal_@item.MilanID','txtM_Yog_@item.MilanID');"/></td>
+
+                    <td>
+                        <input type="text" class="form-control" id="txtM_Yog_@item.MilanID" readonly="" style="cursor: not-allowed;" value="@item.M_Yog" name="M_Yog" /></td>
+                    <td>
+                        <input type="text" class="form-control" id="txtM_Shishu" name="M_Shishu" onkeypress="return isNumberKey(event)" value="@item.M_Shishu"/>
+                        <input type="hidden"  id="hdnMilanID" name="MilanID"  value="@item.MilanID" /></td>
+
+                </tr>
+                                       
+                }
+            }
+        </tbody>
+    </table>
+    <div class="col-md-12 text-center">
+        <input type="button" id="btnSaveMilan" class="btn btn-info" value="Submit" onclick="javascript: InsertMilan();" >
+    </div>  
+}
+ <script type="text/javascript">
+
+     function Sum(p1, p2, output) {
+        // alert("Sum function Called")
+        // alert(p1);
+        // alert($("#" + p1).val())
+         // alert($("#" + p2).val())
+         var total = parseInt($("#" + p1).val()) + parseInt($("#" + p2).val());
+        //// alert($("#" + output).val())
+         $("#" + output).val(total)
+     }
+
+     //$('#txtS_Bal').change(function () {
+
+
+     </script>

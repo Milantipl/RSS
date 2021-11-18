@@ -1,0 +1,848 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "Shakha";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">શાખા</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Master")">Home</a></li>
+                        <li class="breadcrumb-item active">શાખા</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <form id="frmrss">
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Search</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ભાગ: <span style="color: red;">*</span></label>
+                                    <div class="col-sm-8">
+                                        
+                                        @Html.DropDownListFor(x => Model.SearchBhagID, new SelectList(Model.ListBhag, "BhagID", "Bhag"), htmlAttributes: new { @class = "form-control", id = "drpSearchBhag" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">નગર: </label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(x => Model.SearchNagarID, new SelectList(Model.ListNagar, "NagarID", "Nagar"), htmlAttributes: new { @class = "form-control", id = "drpSearchNagar" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">વસ્તી: </label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(x => Model.SearchVastiID, new SelectList(Model.ListSearchVasti, "VastiID", "Vasti"), htmlAttributes: new { @class = "form-control", id = "drpSearchVasti" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખા:</label>
+                                    <div class="col-sm-8">
+
+                                        @Html.DropDownListFor(x => Model.SearchShakhaID, new SelectList(Model.ListShakha, "ShakhaID", "ShakhaName"), htmlAttributes: new { @class = "form-control", id = "drpSearchShakha" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખા પ્રકાર:</label>
+                                    <div class="col-sm-8">
+                                        @Html.DropDownListFor(x => Model.SearchSTID, new SelectList(Model.ListShakhaType, "STID", "ShakhaType"), htmlAttributes: new { @class = "form-control", id = "drpSearchShakhaType" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ટોળી યુક્ત:</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="drpSearchToli" name="SearchToli">
+                                            <option value="0">--Select Toli--</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">પાલક યુક્ત:</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="drpSearchPalak" name="SearchPalak">
+                                            <option value="0">--Select Palak--</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખાની સેવા વસ્તી:</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" id="drpSearchSevavasti" name="SearchSevavasti">
+                                            <option value="0">--Select SevaVasti--</option>
+                                            <option>Yes</option>
+                                            <option>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <input type="button" id="btnSearch" class="btn btn-info" value="Search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Datalist">
+                    @Html.Partial("~/Views/Shared/Partial/_ViewShakha.cshtml", Model)
+
+                </div>
+
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header py-2">
+                                <h4 class="modal-title">Add New Shakha</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખા નું નામ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="txtShakha" name="ShakhaName" />
+                                              
+
+                                                <input type="hidden" id="hdnp" name="p">
+                                                <input type="hidden" id="hdnvid" name="vid">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">વસ્તી: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                @*  @Html.DropDownListFor(x => "", new SelectList(Model.ListVasti, "VastiID", "Vasti"), htmlAttributes: new { @class = "form-control", id = "drpVasti" })*@
+
+                                                @*    <select class="form-control" data-allow-clear="true" id="drpVasti" name="VastiID">
+                                                     
+                    <option value="1" selected="selected">Rachna</option>
+                
+                                                </select>*@
+                                                <div id="Droplist">
+
+                                                    @Html.Partial("~/Views/Shared/Partial/_DDLVasti.cshtml", Model)
+                                                </div>
+                                                @*<select class="form-control" data-allow-clear="true" id="drpVasti" name="VastiID">
+
+                                                    @if (Model.ListVasti != null && Model.ListVasti.Count > 0)
+                                                    {
+                                                        <option value="@Model.ListVasti.FirstOrDefault().VastiID" selected="selected" >@Model.ListVasti.FirstOrDefault().Vasti</option>
+                                                    }
+                                                </select>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">નગર:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" class="form-control" name="Nagar" id="txtNagar" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ભાગ:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" class="form-control" name="Bhag" id="txtBhag" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખા પ્રકાર: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(x => Model.STID, new SelectList(Model.ListShakhaType, "STID", "ShakhaType"), htmlAttributes: new { @class = "form-control", id = "drpShakhaType" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ટોળી યુક્ત: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="drpToli" name="Toli">
+                                                    <option value="0">--Select Toli--</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">પાલક યુક્ત: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="drpPalak" name="Palak">
+                                                    <option value="0">--Select Palak--</option>
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખાની સેવા વસ્તી: </label>
+                                            <div class="col-sm-8">
+                                                @* <div id="AddShakhaControl">
+                                                                @Html.Partial("~/Views/Shared/Partial/_DDLSevavasti.cshtml", Model)
+
+                                                            </div>*@
+                                                @Html.DropDownListFor(x => Model.AssignSVID, new SelectList(Model.ListSevavasti, "SVID", "SevaVasti"), htmlAttributes: new { @class = "form-control", id = "drpSevavasti" })
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">સેવા ઉપક્રમ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="drpSevaUP" name="SevaUP">
+                                                    <option value="0">--Select SevaUP--</option>
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખા સમય: </label>
+                                            <div class="col-sm-8">
+                                               <input type="text"  class="form-control" name="Time" id="txtTime" />
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="offset-md-6 col-md-6">
+                                        <div class="form-group row">
+                                            
+                                            <div class="offset-sm-4 col-sm-8">
+                                                @Html.DropDownListFor(x => Model.ShakhaTime, new SelectList(Model.ListShakhaTime, "ID", "Shakhatime"), htmlAttributes: new { @class = "form-control", id = "drpShakhaTime" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <input type="button" id="btnSave" class="btn btn-info" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.container-fluid -->
+        </form>
+    </section>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var $VastiSelect;
+            $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+            function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                multival = multival || false;
+                return $(element).select2({
+                    tags: allowTaging,
+                    placeholder: placeholder,
+                    minimumInputLength: minInputLen,
+                    maximumSelectionLength: maximumSelectionLength,
+                    multiple: multival,
+                    ajax: {
+                        url: url,
+                        dataType: 'json',
+                        data: function (params) {
+                            return {
+                                term: params.term
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data,
+                                more: false
+                            };
+                        },
+                        cache: true
+                    },
+                });
+            }
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+            $("#Shakha").addClass("nav-link active");
+            $("#Master").addClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#Masterli").addClass("nav-item menu-open");
+           
+            $('#drpSearchBhag').change(function () {
+                //alert($('#drpSearchBhag option:selected').val());
+                if ($('#drpSearchBhag option:selected').val() != "0") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Master/Fill_SearchShakhaControl",
+                        data: { BhagID: $('#drpSearchBhag option:selected').val() },
+                        timeout: 600000,
+                        success: function (data) {
+                            //alert(data.Nagar.length);
+                            if (data != null);
+                            {
+                                var markupnagar = "<option value='0'>--Select Nagar--</option>";
+                                if (data.Nagar != null) {
+                                    for (var x = 0; x < data.Nagar.length; x++) {
+                                        markupnagar += "<option value=" + data.Nagar[x].NagarID + ">" + data.Nagar[x].Nagar + "</option>";
+
+                                    }
+                                    $("#drpSearchNagar").html(markupnagar).show();
+                                }
+                                var markupvasti = "<option value='0'>--Select Vasti--</option>";
+                                if (data.Vasti != null) {
+                                    for (var x = 0; x < data.Vasti.length; x++) {
+                                        markupvasti += "<option value=" + data.Vasti[x].VastiID + ">" + data.Vasti[x].Vasti + "</option>";
+
+                                    }
+                                    $("#drpSearchVasti").html(markupvasti).show();
+                                }
+
+                                var markupshakha = "<option value='0'>--Select Shakha--</option>";
+                                if (data.shakha != null) {
+                                    for (var x = 0; x < data.shakha.length; x++) {
+                                        markupshakha += "<option value=" + data.shakha[x].ShakhaID + ">" + data.shakha[x].ShakhaName + "</option>";
+
+                                    }
+                                    $("#drpSearchShakha").html(markupshakha).show();
+                                }
+                            }
+
+                        },
+                    });
+
+                }
+            });
+
+        });
+        //$('#drpVasti').change(function () {
+        //   // alert('hi');
+        //    if ($('#drpVasti option:selected').val() != " ") {
+        //        $.ajax({
+        //            type: "GET",
+        //            url: "/Master/Fill_AddShakhaDetail",
+        //            data: { VastiID: $('#drpVasti option:selected').val() },
+        //            timeout: 600000,
+        //            success: function (data) {
+        //                // alert(data.Nagar);
+        //                if (data != null);
+        //                {
+        //                    var markup = "";
+        //                    $("#drpSevavasti").html(markup).show();
+        //                    $("#txtNagar").val(data.Nagar);
+
+        //                    $("#txtBhag").val(data.Bhag);
+        //                    markup = "<option value='0'>--Select Sevavasti--</option>";
+        //                    if (data.SevavastiList != "") {
+        //                        for (var x = 0; x < data.SevavastiList.length; x++) {
+        //                            markup += "<option value=" + data.SevavastiList[x].SVID + ">" + data.SevavastiList[x].SevaVasti + "</option>";
+        //                        }
+
+        //                    }
+
+        //                    $("#drpSevavasti").html(markup).show();
+        //                }
+
+        //            },
+        //        });
+
+        //    }
+        //});
+        $("#btnSave").click(function () {
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpVasti").val() == "0") {
+                    toastr.error("Please Select Vasti");
+                    $("#drpVasti").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtShakha").val() == "") {
+                    toastr.error("Please Enter Shakha Name");
+                    $("#txtShakha").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpShakhaType").val() == "0") {
+                    toastr.error("Please Select ShakhaType");
+                    $("#drpShakhaType").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpSevaUP").val() == "0") {
+                    toastr.error("Please Select SevaUP");
+                    $("#drpSevaUP").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpPalak").val() == "0") {
+                    toastr.error("Please Select Palak");
+                    $("#drpPalak").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpToli").val() == "0") {
+                    toastr.error("Please Select Toli");
+                    $("#drpToli").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            //drpSevaUP
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/InsertShakha",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+                        else if (data == "0") {
+                            toastr.error("No Records Found");
+                        }
+                        else {
+
+                            $("#Datalist").html(data);
+                            //$("#myModal").css("display", "none");
+                            toastr.info("Record Save Successfully!!");
+                            Clear();
+                            $.ajax({
+                                type: "GET",
+                                url: "/Master/ClearVastiVast",
+
+                                timeout: 600000,
+                                success: function (data) {
+
+                                    if (data == "0") {
+
+                                        toastr.error("Record Not Found!! ");
+
+                                    }
+                                    else {
+                                        $("#Droplist").html(data);
+                                        var $VastiSelect;
+                                        $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+                                        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                                            multival = multival || false;
+                                            return $(element).select2({
+                                                tags: allowTaging,
+                                                placeholder: placeholder,
+                                                minimumInputLength: minInputLen,
+                                                maximumSelectionLength: maximumSelectionLength,
+                                                multiple: multival,
+                                                ajax: {
+                                                    url: url,
+                                                    dataType: 'json',
+                                                    data: function (params) {
+                                                        return {
+                                                            term: params.term
+                                                        };
+                                                    },
+                                                    processResults: function (data) {
+                                                        return {
+                                                            results: data,
+                                                            more: false
+                                                        };
+                                                    },
+                                                    cache: true
+                                                },
+                                            });
+                                        }
+
+                                    }
+
+                                },
+                            });
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+        function Update(ShakhaID, ShakhaName, VastiID, Nagar, Bhag, STID, Toli, Palak, AssignSVID, SevaUP,ShakhaTime,Time) {
+            // alert(VastiID);
+
+            $("#hdnvid").val(VastiID);
+            $("#hdnShakhaID").val(ShakhaID);
+            $("#txtShakha").val(ShakhaName);
+            $("#txtNagar").val(Nagar);
+            $("#txtBhag").val(Bhag);
+            $("#txtTime").val(Time);
+            $("#drpShakhaTime").val(ShakhaTime);
+            //$("#drpVasti").select2().val(VastiID).trigger('change.select2');
+            //$('#drpVasti').val(VastiID);
+            //$VastiSelect.val(VastiID).trigger("change");
+
+            $("#drpShakhaType").val(STID);
+          
+            $("#drpToli").val(Toli)
+            $("#drpPalak").val(Palak);
+            $("#drpSevaUP").val(SevaUP);
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/Fill_AddShakhaDetail",
+                data: { VastiID: VastiID },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data != null);
+                    {
+                        var markup = "";
+                        $("#drpSevavasti").html(markup).show();
+                        $("#txtNagar").val(data.Nagar);
+
+                        $("#txtBhag").val(data.Bhag);
+                        markup = "<option value='0'>--Select Sevavasti--</option>";
+                        if (data.SevavastiList != "") {
+                            for (var x = 0; x < data.SevavastiList.length; x++) {
+                                if (data.SevavastiList[x].SVID.toString() === AssignSVID.toString()) {
+                                    // alert(ShakhaID + 'if' + data.ShakhaList[x].ShakhaID.toString());
+                                    markup += "<option value=" + data.SevavastiList[x].SVID + " selected='selected'>" + data.SevavastiList[x].SevaVasti + "</option>";
+                                }
+                                else {
+                                    markup += "<option value=" + data.SevavastiList[x].SVID + ">" + data.SevavastiList[x].SevaVasti + "</option>";
+                                }
+                            }
+
+                        }
+
+                        $("#drpSevavasti").html(markup).show();
+
+                    }
+
+                },
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/VastByID",
+                data: { VastiID: VastiID },
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#Droplist").html(data);
+                        var $VastiSelect;
+                        $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+                        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                            multival = multival || false;
+                            return $(element).select2({
+                                tags: allowTaging,
+                                placeholder: placeholder,
+                                minimumInputLength: minInputLen,
+                                maximumSelectionLength: maximumSelectionLength,
+                                multiple: multival,
+                                ajax: {
+                                    url: url,
+                                    dataType: 'json',
+                                    data: function (params) {
+                                        return {
+                                            term: params.term
+                                        };
+                                    },
+                                    processResults: function (data) {
+                                        return {
+                                            results: data,
+                                            more: false
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                        }
+
+                    }
+
+                }
+            });
+            // $("#drpSevavasti").val(AssignSVID);
+        }
+        function Clear() {
+            $("#txtShakha").val('');
+            $("#txtNagar").val('');
+            $("#txtBhag").val('');
+            $("#drpVasti").val(' ');
+            $("#drpShakhaType").val('0');
+            $("#drpToli").val('0');
+            $("#drpPalak").val('0');
+            $("#drpSevaUP").val('0');
+            $("#hdnShakhaID").val('');
+            $("#txtTime").val('');
+            $("#drpShakhaTime").val(0);
+            $.ajax({
+                type: "GET",
+                url: "/Master/ClearVastiVast",
+
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#Droplist").html(data);
+                        var $VastiSelect;
+                        $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+                        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                            multival = multival || false;
+                            return $(element).select2({
+                                tags: allowTaging,
+                                placeholder: placeholder,
+                                minimumInputLength: minInputLen,
+                                maximumSelectionLength: maximumSelectionLength,
+                                multiple: multival,
+                                ajax: {
+                                    url: url,
+                                    dataType: 'json',
+                                    data: function (params) {
+                                        return {
+                                            term: params.term
+                                        };
+                                    },
+                                    processResults: function (data) {
+                                        return {
+                                            results: data,
+                                            more: false
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                        }
+
+                    }
+
+                },
+            });
+
+        }
+        function Delete(ShakhaID) {
+            //alert('hi');
+            $.ajax({
+                type: "GET",
+                url: "/Master/DeleteShakha/",
+                data: { ShakhaID: ShakhaID },
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+                        toastr.error("No Records Found");
+                    }
+                    else {
+                        $("#Datalist").html(data);
+                        toastr.info("Record Deleted Sucessfully!!")
+                    }
+
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+        }
+
+
+        $("#btnSearch").click(function () {
+            // alert($('#drpNagar option:selected').val());
+            $("#hdnp").val(0);
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpSearchBhag").val() == "0") {
+                    toastr.error("Please Select Bhag");
+                    $("#drpSearchBhag").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/SearchShakha",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+
+                        else {
+                            $("#Datalist").html(data);
+                            if ($("#hdntotal").val() == "0") {
+                                toastr.error("No Record Found !!");
+                            }
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+
+        function GetRecords(p) {
+            // alert('hi');
+            $("#hdnp").val(p);
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchShakha",
+                data: $("#frmrss").serialize(),
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+                        toastr.error("No Records Found");
+                    }
+                    else {
+                        $("#Datalist").html(data);
+                    }
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+        }
+
+
+
+        function Binddata(ddlvasti) {
+
+           
+            var selectedText = ddlvasti.options[ddlvasti.selectedIndex].innerHTML;
+            var selectedValue = ddlvasti.value;
+
+           // alert("Selected Text: " + selectedText + " Value: " + selectedValue);
+
+
+
+            if (selectedValue != " ") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/Fill_AddShakhaDetail",
+                    data: { VastiID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data != null);
+                        {
+                            var markup = "";
+                            $("#drpSevavasti").html(markup).show();
+                            $("#txtNagar").val(data.Nagar);
+
+                            $("#txtBhag").val(data.Bhag);
+                            markup = "<option value='0'>--Select Sevavasti--</option>";
+                            if (data.SevavastiList != "") {
+                                for (var x = 0; x < data.SevavastiList.length; x++) {
+                                    markup += "<option value=" + data.SevavastiList[x].SVID + ">" + data.SevavastiList[x].SevaVasti + "</option>";
+                                }
+
+                            }
+
+                            $("#drpSevavasti").html(markup).show();
+                        }
+
+                    },
+                });
+
+            }
+
+        }
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    var TotalSevaVastiTotal = 0; var ShakhaSevaVastiTotal = 0; var SKYSVTotal = 0; var SVSSTotal = 0; var SUSSTotal = 0;
+}
+
+@if (Model.Report4List != null && Model.Report4List.Count > 0)
+{
+    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 1rem; color: #000000; background-color: transparent; margin-bottom: 0; text-align: center;">
+        
+            <tr style="background-color: #28a745 !important; color: #fff;"> 
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">નગર </td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">વૃત પર આવેલી કુલ શાખા</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">ચાલુ શાખા</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-bottom:none; vertical-align: middle;">બંધ શાખા</td>
+                <td style="vertical-align: middle; padding: .75rem; vertical-align: top; border: 1px solid #000; border-bottom:none; vertical-align: middle;">બંધ શાખા</td>
+            </tr>
+        
+       
+            @foreach (ConnectionLibrary.Model.Reports.Report4 item in Model.Report4List)
+            {
+                <tr>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.Nagar</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.TotalShakha</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.ChaluShakha</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-right:none; border-top:none">@item.bandhShakha</td>
+                    <td style="padding: .75rem; vertical-align: top; border: 1px solid #000; border-top:none">@item.bandhShakhaInString</td>
+                </tr>
+            }
+        
+    </table>
+}
+
+
+
+
+

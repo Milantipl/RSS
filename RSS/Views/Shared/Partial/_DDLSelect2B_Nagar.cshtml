@@ -1,0 +1,14 @@
+﻿@model ConnectionLibrary.Model.Result
+
+<select class="form-control" id="drpB_Nagar" name="B_NagarID" onchange="BindBethakdata(this);">
+    @if (Model.ListNagar != null && Model.ListNagar.Count > 0)
+    {
+        <option value="@Model.ListNagar.FirstOrDefault().NagarID" selected="selected">@Model.ListNagar.FirstOrDefault().Nagar</option>
+    }
+</select>
+
+
+
+
+
+

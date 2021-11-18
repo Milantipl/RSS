@@ -1,0 +1,677 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "Milan";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">મિલન</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Master")">Home</a></li>
+                        <li class="breadcrumb-item active">મિલન</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <form id="frmrss">
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Search</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i
+                                    class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-3 text-right col-form-label">ભાગ:  <span style="color: red;">*</span></label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(x => Model.SearchBhagID, new SelectList(Model.ListBhag, "BhagID", "Bhag"), htmlAttributes: new { @class = "form-control", id = "drpSearchBhag" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-3 text-right col-form-label">નગર:</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(x => Model.SearchNagarID, new SelectList(Model.ListNagar, "NagarID", "Nagar"), htmlAttributes: new { @class = "form-control", id = "drpSearchNagar" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-3 text-right col-form-label">વસ્તી:</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(x => Model.SearchVastiID, new SelectList(Model.ListSearchVasti, "VastiID", "Vasti"), htmlAttributes: new { @class = "form-control", id = "drpSearchVasti" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-3 text-right col-form-label">મિલન:</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(x => Model.SearchMilanID, new SelectList(Model.ListMilan, "MilanID", "MilanName"), htmlAttributes: new { @class = "form-control", id = "drpSearchMilan" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-3 text-right col-form-label">શાખા પ્રકાર:</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(x => Model.SearchSTID, new SelectList(Model.ListShakhaType, "STID", "ShakhaType"), htmlAttributes: new { @class = "form-control", id = "drpSearchShakhaType" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-sm-3 text-right col-form-label">મિલન પ્રકાર:</label>
+                                    <div class="col-sm-9">
+                                        @Html.DropDownListFor(x => Model.SearchMTID, new SelectList(Model.ListMilanType, "MTID", "MilanType"), htmlAttributes: new { @class = "form-control", id = "drpSearchMilanType" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <input type="button" id="btnSearch" class="btn btn-info" value="Search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- /.card-header -->
+                <div id="Datalist">
+                    @Html.Partial("~/Views/Shared/Partial/_ViewMilan.cshtml", Model)
+
+                </div>
+
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header py-2">
+                                <h4 class="modal-title">Add New Milan</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">મિલન નું નામ:  <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="MilanName" id="txtMilanName" />
+                                                <input type="hidden" id="hdnMilanID" name="MilanID">
+                                                <input type="hidden" id="hdnp" name="p">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">વસ્તી:  <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <div id="Droplist">
+
+                                                    @Html.Partial("~/Views/Shared/Partial/_DDLVasti.cshtml", Model)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">નગર:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" class="form-control" name="Nagar" id="txtNagar" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ભાગ:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" class="form-control" name="Bhag" id="txtBhag" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">શાખા પ્રકાર:  <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(x => Model.STID, new SelectList(Model.ListShakhaType, "STID", "ShakhaType"), htmlAttributes: new { @class = "form-control", id = "drpShakhaType" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">મિલન નો પ્રકાર:  <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                @Html.DropDownListFor(x => Model.MTID, new SelectList(Model.ListMilanType, "MTID", "MilanType"), htmlAttributes: new { @class = "form-control", id = "drpMilanType" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <input type="button" id="btnSave" class="btn btn-info" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </form>
+        <!-- /.container-fluid -->
+    </section>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $VastiSelect;
+            $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+            function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                multival = multival || false;
+                return $(element).select2({
+                    tags: allowTaging,
+                    placeholder: placeholder,
+                    minimumInputLength: minInputLen,
+                    maximumSelectionLength: maximumSelectionLength,
+                    multiple: multival,
+                    ajax: {
+                        url: url,
+                        dataType: 'json',
+                        data: function (params) {
+                            return {
+                                term: params.term
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data,
+                                more: false
+                            };
+                        },
+                        cache: true
+                    },
+                });
+            }
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+            $("#Milan").addClass("nav-link active");
+            $("#Master").addClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#Masterli").addClass("nav-item menu-open");
+            //$('#drpVasti').change(function () {
+            //  //  alert($('#drpBhag option:selected').val());
+            //    if ($('#drpVasti option:selected').val() != " ") {
+            //        $.ajax({
+            //            type: "GET",
+            //            url: "/Master/Fill_AddMilanDetail",
+            //            data: { VastiID: $('#drpVasti option:selected').val() },
+            //            timeout: 600000,
+            //            success: function (data) {
+            //                // alert(data.Nagar);
+            //                if (data != null);
+            //                {
+
+            //                    $("#txtNagar").val(data.Nagar);
+
+            //                    $("#txtBhag").val(data.Bhag);
+
+            //                }
+
+            //            },
+            //        });
+
+            //    }
+            //});
+
+            $('#drpSearchBhag').change(function () {
+                //alert($('#drpSearchBhag option:selected').val());
+                if ($('#drpSearchBhag option:selected').val() != "0") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Master/Fill_SearchMilanControl",
+                        data: { BhagID: $('#drpSearchBhag option:selected').val() },
+                        timeout: 600000,
+                        success: function (data) {
+                            //alert(data.Nagar.length);
+                            if (data != null);
+                            {
+                                var markupnagar = "<option value='0'>--Select Nagar--</option>";
+                                if (data.Nagar != null) {
+                                    for (var x = 0; x < data.Nagar.length; x++) {
+                                        markupnagar += "<option value=" + data.Nagar[x].NagarID + ">" + data.Nagar[x].Nagar + "</option>";
+
+                                    }
+                                    $("#drpSearchNagar").html(markupnagar).show();
+                                }
+                                var markupvasti = "<option value='0'>--Select Vasti--</option>";
+                                if (data.Vasti != null) {
+                                    for (var x = 0; x < data.Vasti.length; x++) {
+                                        markupvasti += "<option value=" + data.Vasti[x].VastiID + ">" + data.Vasti[x].Vasti + "</option>";
+
+                                    }
+                                    $("#drpSearchVasti").html(markupvasti).show();
+                                }
+
+                                var markupshakha = "<option value='0'>--Select Milan--</option>";
+                                if (data.Milan != null) {
+                                    for (var x = 0; x < data.Milan.length; x++) {
+                                        markupshakha += "<option value=" + data.Milan[x].MilanID + ">" + data.Milan[x].MilanName + "</option>";
+
+                                    }
+                                    $("#drpSearchMilan").html(markupshakha).show();
+                                }
+                            }
+
+                        },
+                    });
+
+                }
+            });
+
+        });
+        $("#btnSave").click(function () {
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpVasti").val() == "0") {
+                    toastr.error("Please Select Vasti");
+                    $("#drpVasti").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtMilanName").val() == "") {
+                    toastr.error("Please Enter Milan Name");
+                    $("#txtShakha").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpShakhaType").val() == "0") {
+                    toastr.error("Please Select ShakhaType");
+                    $("#drpShakhaType").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpMilanType").val() == "0") {
+                    toastr.error("Please Select MilanType");
+                    $("#drpMilanType").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            //drpSevaUP
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/InsertMilan",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+                        else if (data == "0") {
+                            toastr.error("No Records Found");
+                        }
+                        else {
+
+                            $("#Datalist").html(data);
+                            //$("#myModal").css("display", "none");
+                            toastr.info("Record Save Successfully!!");
+                            Clear();
+                            $.ajax({
+                                type: "GET",
+                                url: "/Master/ClearVastiVast",
+
+                                timeout: 600000,
+                                success: function (data) {
+
+                                    if (data == "0") {
+
+                                        toastr.error("Record Not Found!! ");
+
+                                    }
+                                    else {
+                                        $("#Droplist").html(data);
+                                        var $VastiSelect;
+                                        $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+                                        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                                            multival = multival || false;
+                                            return $(element).select2({
+                                                tags: allowTaging,
+                                                placeholder: placeholder,
+                                                minimumInputLength: minInputLen,
+                                                maximumSelectionLength: maximumSelectionLength,
+                                                multiple: multival,
+                                                ajax: {
+                                                    url: url,
+                                                    dataType: 'json',
+                                                    data: function (params) {
+                                                        return {
+                                                            term: params.term
+                                                        };
+                                                    },
+                                                    processResults: function (data) {
+                                                        return {
+                                                            results: data,
+                                                            more: false
+                                                        };
+                                                    },
+                                                    cache: true
+                                                },
+                                            });
+                                        }
+
+                                    }
+
+                                },
+                            });
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+        function Update(MilanID, MilanName, VastiID, Nagar, Bhag, STID, MTID) {
+            //  alert(VastiID);
+            $("#hdnMilanID").val(MilanID);
+            $("#txtMilanName").val(MilanName);
+            $("#txtNagar").val(Nagar);
+            $("#txtBhag").val(Bhag);
+
+            $("#drpShakhaType").val(STID);
+            $("#drpMilanType").val(MTID);
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/Fill_AddMilanDetail",
+                data: { VastiID: VastiID },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data != null);
+                    {
+
+                        $("#txtNagar").val(data.Nagar);
+
+                        $("#txtBhag").val(data.Bhag);
+
+                    }
+                },
+            });
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/VastByID",
+                data: { VastiID: VastiID },
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#Droplist").html(data);
+                        var $VastiSelect;
+                        $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+                        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                            multival = multival || false;
+                            return $(element).select2({
+                                tags: allowTaging,
+                                placeholder: placeholder,
+                                minimumInputLength: minInputLen,
+                                maximumSelectionLength: maximumSelectionLength,
+                                multiple: multival,
+                                ajax: {
+                                    url: url,
+                                    dataType: 'json',
+                                    data: function (params) {
+                                        return {
+                                            term: params.term
+                                        };
+                                    },
+                                    processResults: function (data) {
+                                        return {
+                                            results: data,
+                                            more: false
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                        }
+
+                    }
+
+                }
+            });
+            // $("#drpSevavasti").val(AssignSVID);
+        }
+        function Clear() {
+            // alert('hi');
+            $("#txtMilanName").val('');
+            $("#txtNagar").val('');
+            $("#txtBhag").val('');
+            $("#drpVasti").val(' ');
+            $("#drpShakhaType").val('0');
+            $("#drpMilanType").val('0');
+
+            $("#hdnMilanID").val('');
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/ClearVastiVast",
+
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#Droplist").html(data);
+                        var $VastiSelect;
+                        $VastiSelect = InitSelect2FromRemote("#drpVasti", "/Master/GetVastiDrpList", "Select Vasti", true, 1, 1, false);
+                        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+                            multival = multival || false;
+                            return $(element).select2({
+                                tags: allowTaging,
+                                placeholder: placeholder,
+                                minimumInputLength: minInputLen,
+                                maximumSelectionLength: maximumSelectionLength,
+                                multiple: multival,
+                                ajax: {
+                                    url: url,
+                                    dataType: 'json',
+                                    data: function (params) {
+                                        return {
+                                            term: params.term
+                                        };
+                                    },
+                                    processResults: function (data) {
+                                        return {
+                                            results: data,
+                                            more: false
+                                        };
+                                    },
+                                    cache: true
+                                },
+                            });
+                        }
+
+                    }
+
+                },
+            });
+        }
+        function Delete(MilanID) {
+            //  alert('hi');
+            $.ajax({
+                type: "GET",
+                url: "/Master/DeleteMilan/",
+                data: { MilanID: MilanID },
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+                        toastr.error("No Records Found");
+                    }
+                    else {
+                        $("#Datalist").html(data);
+                        toastr.info("Record Deleted Sucessfully!!")
+                    }
+
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+        }
+        $("#btnSearch").click(function () {
+            // alert($('#drpNagar option:selected').val());
+            $("#hdnp").val(0);
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpSearchBhag").val() == "0") {
+                    toastr.error("Please Select Bhag");
+                    $("#drpSearchBhag").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/SearchMilan",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+
+                        else {
+                            $("#Datalist").html(data);
+                            if ($("#hdntotal").val() == "0") {
+                                toastr.error("No Record Found !!");
+                            }
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+        function Binddata(ddlvasti) {
+
+
+            var selectedText = ddlvasti.options[ddlvasti.selectedIndex].innerHTML;
+            var selectedValue = ddlvasti.value;
+
+            // alert("Selected Text: " + selectedText + " Value: " + selectedValue);
+
+            if (selectedValue != " ") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/Fill_AddMilanDetail",
+                    data: { VastiID: $('#drpVasti option:selected').val() },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data != null);
+                        {
+
+                            $("#txtNagar").val(data.Nagar);
+
+                            $("#txtBhag").val(data.Bhag);
+
+                        }
+
+                    },
+                });
+
+            }
+
+
+        }
+        function GetRecords(p) {
+            // alert('hi');
+            $("#hdnp").val(p);
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchMilan",
+                data: $("#frmrss").serialize(),
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+                        toastr.error("No Records Found");
+                    }
+                    else {
+                        $("#Datalist").html(data);
+                    }
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+        }
+    </script>
+}

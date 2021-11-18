@@ -1,0 +1,190 @@
+﻿@model ConnectionLibrary.Model.Result
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="@Url.Action("Dashboard", "Master")" class="brand-link">
+        <img src="~/Content/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-bold">RSS</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+           with font-awesome or any other icon font library -->
+
+                <li class="nav-item">
+                    <a href="@Url.Action("Dashboard", "Master")" class="nav-link"  id="dashboard">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Dashboard
+                               
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Masterli">
+                    <a href="#" class="nav-link" id="Master">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Masters
+                                   
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @if (Model.UserDetail.Roleid != 3)
+                        {
+
+                            <li class="nav-item">
+                                <a href="@Url.Action("Vibhag", "Master")" class="nav-link" id="Vibhag">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>વિભાગ</p>
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a href="@Url.Action("Bhag", "Master")" class="nav-link" id="Bhag">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>ભાગ</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Nagar", "Master")" class="nav-link" id="Nagar">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>નગર</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Vasti", "Master")" class="nav-link" id="Vasti">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>વસ્તી</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("Shakha", "Master")" class="nav-link" id="Shakha">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>શાખા</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Milan", "Master")" class="nav-link" id="Milan">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>મિલન</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Sevavasti", "Master")" class="nav-link" id="Sevavasti">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>સેવા વસ્તી</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item" id="Vrutli">
+                    <a href="#" class="nav-link" id="Vrut">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Vrut
+                                   
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+                        <li class="nav-item">
+                            <a href="@Url.Action("VrutNagar", "Master")" class="nav-link"  id="VrutNagar">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>નગર</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @if (Model.UserDetail.Roleid == 1)
+                {
+                    <li class="nav-item" id="Settingli">
+                        <a href="#" class="nav-link" id="Setting">
+                            <i class="nav-icon fas fa-circle"></i>
+                            <p>
+                                Setting
+                                   
+                            <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+
+                            <li class="nav-item">
+                                <a href="@Url.Action("Createuser", "Account")" class="nav-link"  id="CreateUser">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>વપરાશકર્તા બનાવો</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("ShakhaType", "Master")" class="nav-link" id="ShakhaType">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>શાખા પ્રકાર</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("MilanType", "Master")" class="nav-link" id="MilanType">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>મિલન પ્રકાર</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("SevaKary", "Master")" class="nav-link" id="SevaKary">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>સેવાકાર્ય</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                <li class="nav-item" id="Reportsli">
+                        <a href="#" class="nav-link" id="Reports">
+                            <i class="nav-icon fas fa-chart-bar"></i>
+                            <p>
+                                Reports
+                                   
+                            <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                <li class="nav-item" id="Report1">
+                    <a href="@Url.Action("Index", "Report")" class="nav-link"  id="report1">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Report1</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Report2">
+                    <a href="@Url.Action("Report2", "Report")" class="nav-link"  id="report2">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Report2</p>
+                    </a>
+                </li>
+                <li class="nav-item" id="Report3">
+                    <a href="@Url.Action("Report3", "Report")" class="nav-link"  id="report3">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Report3</p>
+                    </a>
+                </li>
+                            <li class="nav-item" id="Report4">
+                            <a href="@Url.Action("Report4", "Report")" class="nav-link"  id="report4">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Report4</p>
+                            </a>
+                        </li>
+
+                            <li class="nav-item" id="Report5">
+                            <a href="@Url.Action("Report5", "Report")" class="nav-link"  id="report4">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Report5</p>
+                            </a>
+                        </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

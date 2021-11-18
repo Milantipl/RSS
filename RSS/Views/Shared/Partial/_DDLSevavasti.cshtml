@@ -1,0 +1,4 @@
+﻿@model ConnectionLibrary.Model.Result  
+
+@Html.DropDownListFor(x => Model.AssignSVID, new SelectList(Model.ListSevavasti, "SVID", "SevaVasti"), htmlAttributes: new { @class = "form-control", id = "drpSevavasti" })
+

@@ -1,0 +1,24 @@
+﻿@model ConnectionLibrary.Model.Result
+@if (Model.DashboardBandShakhaList != null && Model.DashboardBandShakhaList.Count > 0)
+{
+    <table class="table table-bordered">
+        <thead class="m-head">
+            <tr>
+                <th>શાખા</th>
+                <th>વસ્તી</th>
+                <th>નગર </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ConnectionLibrary.Model.DashboardBandhShakha item in Model.DashboardBandShakhaList)
+            {
+                <tr>
+                    <td>@item.ShakhaName</td>
+                    <td>@item.TotalBandhVasti</td>
+                    <td>@item.TotalBandhNagar</td>
+                </tr>
+               
+            }
+        </tbody>
+    </table>
+}

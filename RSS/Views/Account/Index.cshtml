@@ -1,0 +1,209 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RSS | Login</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+       <link href="~/Content/dist/css/toastr.min.css" rel="stylesheet" />
+      <link href="~/Content/dist/css/yjaeB.css" rel="stylesheet" />
+</head>
+
+<body class="hold-transition login-page">
+     <div style="display: none; z-index: 10060;" id="milan">
+        <div id="loader-wrapper">
+            <div id="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+
+        </div>
+    </div>
+    <div class="login-box">
+        <div class="login-logo">
+            <b>RSS</b>
+        </div>
+        <!-- /.login-logo -->
+         <form id="frmrss">
+        <div class="card" id="DivMobileVerification">
+            <div class="card-body login-card-body">
+                <p class="text-dark login-box-msg">Sign in to start your session</p>
+
+               
+                    
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="txtMobileNo" name="MobileNo" placeholder="Mobile No" maxlength="10" onkeypress="return isNumberKey(event)">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-mobile"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-12">
+                             <input type="button" id="btnMobileVerify" class="text-center btn btn-primary btn-block" value="Proceed to Verify">
+                           
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    
+                
+            </div>
+        </div>
+        <div class="card mt-2" id="DivOTPVerification" style="display:none;">
+            <div class=" card-body login-card-body">
+                <p class="text-dark login-box-msg">OTP has been sent to your Mobile No. This OTP will be valid for <strong>10 Minutes</strong>.</p>
+              
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Enter OTP" id="txtOTP" maxlength="6" name="OTP" onkeypress="return isNumberKey(event)">
+                         <input type="hidden" id="hdnOTPID" name="ID" >
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-mobile"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- /.col -->
+                        <div class="col-12">
+                            <!--<p class="text-danger login-box-msg">OTP will expire in <strong>00.30</strong> minutes</p>-->
+                            
+                              <input type="button" id="btnOTPVerify" class="text-center btn btn-primary btn-block" value="Verify">
+                        </div>
+                        <!-- /.col -->
+                    </div>
+              
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+             </form>
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/dist/js/adminlte.min.js"></script>
+    <script src="~/Content/dist/js/toastr.min.js"></script>
+
+
+    <script type="text/javascript">
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+        $("#btnMobileVerify").click(function () {
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#txtMobileNo").val() == "") {
+                    toastr.error("Please Enter MobileNo");
+                    $("#txtMobileNo").focus();
+                    TValidate = false;
+                }
+               
+            }
+            if ($("#txtMobileNo").val().length < 10) {
+                toastr.error("Please Enter 10 digit MobileNo");
+                $("#txtMobileNo").focus();
+                TValidate = false;
+            }
+            if (TValidate) {
+               
+                $.ajax({
+                    type: "POST",
+                    url: "/Account/MobileOTPVerification",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+                      
+                        if (data == "0") {
+
+                            toastr.error("You are Provided MobileNo is Incorrect Please Enter Valid OTP");
+
+                        }
+                        else {
+                           // alert('hi');
+                            $("#DivMobileVerification").css("display", "none");
+                            $("#DivOTPVerification").css("display", "block");
+                           
+                            $("#hdnOTPID").val(data);
+
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+            return TValidate;
+        });
+
+        $("#btnOTPVerify").click(function () {
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#txtOTP").val() == "") {
+                    toastr.error("Please Enter OTP");
+                    $("#txtOTP").focus();
+                    TValidate = false;
+                }
+
+            }
+            if ($("#txtOTP").val().length < 6) {
+                toastr.error("Please Enter 6 digit OTP");
+                $("#txtOTP").focus();
+                TValidate = false;
+            }
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Account/VerifyOTP",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+                       
+                        if (data == "0") {
+
+                            toastr.error("You are Provided OTP is Incorrect Please Enter Valid OTP");
+
+                        }
+                        else {
+                            window.location.href = "/Master/Dashboard";
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+            return TValidate;
+        });
+    </script>
+</body>
+
+</html>

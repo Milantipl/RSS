@@ -1,0 +1,69 @@
+﻿@model ConnectionLibrary.Model.Result
+<input type="hidden" id="hdnStotal" name="STotal" value="@Model.Total" />
+@if (Model.ViewShakhaUPVrut != null && Model.ViewShakhaUPVrut.Count > 0)
+{
+    <table class="table table-bordered" id="tblShakha">
+        <thead class="m-head">
+            <tr>
+                <th>શાખા</th>
+                <th style="width: 15%;">તરુણ <span style="color: red;">*</span></th>
+                <th style="width: 15%;">બાલ <span style="color: red;">*</span></th>
+                <th style="width: 15%;">યોગ</th>
+                <th style="width: 15%;">શિશુ <span style="color: red;">*</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ViewShakhaUPVrut)
+            {
+                <tr>
+                    <td>@item.ShakhaName</td>
+                    <td>
+
+                        <input type="text" class="form-control S_Tarun" id="txtS_Tarun_@item.ShakhaID" name="S_Tarun" value="@item.S_Tarun" onkeypress="return isNumberKey(event)" onchange="javascript: Sum('txtS_Tarun_@item.ShakhaID','txtS_Bal_@item.ShakhaID','txtS_Yo_@item.ShakhaID');" />
+                        <input type="hidden"  id="hdnSUPVID" name="SUPVID"  value="@item.SUPVID" /></td>
+                    <td>
+                        <input type="text" class="form-control S_Bal" id="txtS_Bal_@item.ShakhaID" name="S_Bal"  value="@item.S_Bal" onkeypress="return isNumberKey(event)" onchange="javascript: Sum('txtS_Tarun_@item.ShakhaID','txtS_Bal_@item.ShakhaID','txtS_Yo_@item.ShakhaID');"  /></td>
+                    <td>
+                        <input type="text" class="form-control S_Yog" id="txtS_Yo_@item.ShakhaID" readonly="" style="cursor: not-allowed;"   value="@item.S_Yog" name="S_Yog" ></td>
+                    <td>
+                        <input type="text" class="form-control" id="txtS_Shishu" name="S_Shishu"  value="@item.S_Shishu" onkeypress="return isNumberKey(event)"/>
+                        <input type="hidden"  id="hdnShakhaID" name="ShakhaID"  value="@item.ShakhaID" />
+
+                    </td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+    <div class="col-md-12 text-center">
+        <input type="button" id="btnSaveShakha" class="btn btn-info" value="Submit" onclick="javascript: InsertShakha();">
+    </div>  
+}
+<script type="text/javascript">
+
+    function Sum(p1, p2, output) {
+        //alert("Sum function Called")
+       // alert(p1);
+       // alert($("#" + p1).val())
+      //  alert($("#" + p2).val())
+        var total = parseInt($("#" + p1).val()) + parseInt($("#" + p2).val());
+       // alert($("#" + output).val())
+        $("#" + output).val(total)
+    }
+
+    //$('#txtS_Bal').change(function () {
+    //    // alert('hi');
+    //    var bal = $(this).val();
+    //    var tarun = $(this).parent().parent().find('input').val();
+
+    //    var total = parseInt(bal) + parseInt(tarun);
+    //    alert(total);
+    //    $(this).parent(this).parent(this).parent(this).find('input').val(total);
+    //    // alert(Yog);
+
+    //});
+
+
+</script>

@@ -1,0 +1,1863 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "VrutNagar";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">વૃત્ત</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard", "Master")">Home</a></li>
+                        <li class="breadcrumb-item active">વૃત્ત</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <form id="frmrss">
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Search</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i
+                                    class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-1 text-right col-form-label">નગર: <span style="color: red;">*</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="drpNagar" name="SearchNagarID">
+                                </select>
+                            </div>
+                            <label for="inputEmail3" class="col-sm-1 text-right col-form-label">માસ:<span style="color: red;">*</span></label>
+                            <div class="col-sm-4">
+                                @Html.DropDownListFor(x => Model.SearchMonthID, new SelectList(Model.ListMonth, "MonthID", "Month"), htmlAttributes: new { @class = "form-control", id = "drpMonth" })
+                            </div>
+                            <div class="col-sm-2">
+
+                                <input type="button" id="btnSearch" class="btn btn-info" value="Submit">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">વૃત્ત</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i
+                                    class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="text-center">
+                            <a class="btn btn-primary mb-1" data-toggle="modal" data-target="#addNagar" onclick="javascript:ClearNagar();">Add Nagar</a>
+                            <a class="btn btn-primary mb-1" data-toggle="modal" data-target="#addShakha" onclick="javascript:ClearShakha();" href="#">Add Shakha</a>
+                            <a class="btn btn-primary mb-1" data-toggle="modal" data-target="#addMilan" onclick="javascript:ClearMilan();" href="#">Add Milan</a>
+                            <a class="btn btn-primary mb-1" data-toggle="modal" data-target="#addBethak" onclick="javascript:ClearBethak();" href="#">Add Bethak</a>
+                        </div>
+                        <div id="DatalistVrutNagar">
+                            @Html.Partial("~/Views/Shared/Partial/_ViewNagarVrut.cshtml", Model)
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+                <div class="modal fade" id="addShakha" role="dialog">
+                    <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header py-2">
+                                <h4 class="modal-title">Add Shakha</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">નગર: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+
+
+                                                <div id="DroplistShakha">
+
+                                                    @Html.Partial("~/Views/Shared/Partial/_DDLSelect2S_Nagar.cshtml", Model)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">ભાગ:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" id="txtSBhag"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">માસ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+                                                @Html.DropDownListFor(x => Model.S_MonthID, new SelectList(Model.ListMonth, "MonthID", "Month"), htmlAttributes: new { @class = "form-control", id = "drpS_Month" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="DatalistVrutShakha">
+                                        @Html.Partial("~/Views/Shared/Partial/_ViewShakhaVrut.cshtml", Model)
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal fade" id="addMilan" role="dialog">
+                    <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header py-2">
+                                <h4 class="modal-title">Add Milan</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">નગર: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+
+
+                                                <div id="DroplistMilan">
+
+                                                    @Html.Partial("~/Views/Shared/Partial/_DDLSelect2M_Nagar.cshtml", Model)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">ભાગ:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" id="txtMBhag"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">માસ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+                                                @Html.DropDownListFor(x => Model.M_MonthID, new SelectList(Model.ListMonth, "MonthID", "Month"), htmlAttributes: new { @class = "form-control", id = "drpM_Month" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="DatalistVrutMilan">
+                                        @Html.Partial("~/Views/Shared/Partial/_ViewMilanVrut.cshtml", Model)
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="modal fade" id="addNagar" role="dialog">
+                    <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header py-2">
+                                <h4 class="modal-title">Add Nagar</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">નગર: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+
+                                                <input type="hidden" id="hdnNVID" name="NVID">
+                                                <div id="DroplistNagar">
+
+                                                    @Html.Partial("~/Views/Shared/Partial/_DDLSelect2N_Nagar.cshtml", Model)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ભાગ:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" id="txtNBhag"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">માસ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+                                                @Html.DropDownListFor(x => Model.N_MonthID, new SelectList(Model.ListMonth, "MonthID", "Month"), htmlAttributes: new { @class = "form-control", id = "drpN_Month" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">
+                                                કુલ નગર સાપ્તાહિક
+                              બેઠક: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" id="txtBethak" name="Bethak" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">બૌદ્ધિક વર્ગ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" name="Bvarg" id="drpBvarg">
+                                                    <option value="0">--Select Any--</option>
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">
+                                                બૌદ્ધિક વર્ગ માં
+                              ઉપસ્થિતિ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="BvargUP" id="txtBvargUP" readonly="" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">
+                                                નગર અભ્યાસ વર્ગ
+                              થયો:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" name="AbyasVarg" id="drpAbyasVarg">
+                                                    <option value="0">--Select AbhyasVarg--</option>
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">અપેક્ષિત:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="Apekshit" id="txtApekshit" readonly="" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-4 text-right col-form-label">ઉપસ્થિત:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" name="Upsthit" id="txtUpsthit" readonly="" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">
+                                                નગર માસિક એકત્રીકરણ
+                              થયું:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" id="drpEktrikaran" name="Ektrikaran">
+                                                    <option value="0">--Select Ektrikaran--</option>
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-6 text-right col-form-label">તરુણ:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="txtN_Tarun" name="N_Tarun" readonly="" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-6 text-right col-form-label">બાલ:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="txtN_Bal" name="N_Bal" readonly="" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-6 text-right col-form-label">યોગ:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" placeholder="0" id="txtN_Yog" name="N_Yog"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-6 text-right col-form-label">શિશુ:<span style="color: red;">*</span></label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="txtN_Shishu" name="N_Shishu" readonly="" onkeypress="return isNumberKey(event)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 text-center">
+                                        <input type="button" id="btnSaveNagar" class="btn btn-info" value="Submit">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="addBethak" role="dialog">
+                    <div class="modal-dialog modal-lg" style="max-width: 950px;">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header py-2">
+                                <h4 class="modal-title">Add Bethak</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">નગર: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+
+
+                                                <div id="DroplistBethak">
+
+                                                    @Html.Partial("~/Views/Shared/Partial/_DDLSelect2B_Nagar.cshtml", Model)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">ભાગ:</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" id="txtBBhag"
+                                                    class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-3 text-right col-form-label">માસ: <span style="color: red;">*</span></label>
+                                            <div class="col-sm-9">
+                                                @Html.DropDownListFor(x => Model.B_MonthID, new SelectList(Model.ListMonth, "MonthID", "Month"), htmlAttributes: new { @class = "form-control", id = "drpB_Month" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">પ્રથમ બુધવાર વિષય બેઠક:</label>
+                                            <div class="col-sm-4">
+                                                <input type="checkbox" id="chkFW_VishayBethak1" />
+                                                <input type="checkbox" id="chkFW_VishayBethak2" />
+                                                <input type="checkbox" id="chkFW_VishayBethak3" />
+                                                <input type="checkbox" id="chkFW_VishayBethak4" />
+                                                <input type="checkbox" id="chkFW_VishayBethak5" />
+
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-9 text-right col-form-label">બીજો બુધવાર કાર્યકારિણી બેઠક:</label>
+                                            <div class="col-sm-3">
+                                                <input type="checkbox" id="chkSW_KarykariniBethak" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">ચોથો બુધવાર વિસ્તૃત બેઠક:</label>
+                                            <div class="col-sm-4">
+                                                <input type="checkbox" id="chkFW_VistrutBethak" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                      <div class="col-md-4">
+                                        <div class="form-group row">
+                                            <label for="inputEmail3" class="col-sm-8 text-right col-form-label">ત્રિજો બુધવાર વસ્તી બેઠક:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" readonly="" style="cursor: not-allowed;" id="txtTW_VastiBethak" name="TW_VastiBethak" value="0"
+                                                    class="form-control" />
+                                                <input type="hidden" id="hdnBVastiIDs" name="BVastiIDs" />
+                                                <input type="hidden" id="hdnBethakID" name="BethakID" />
+                                                <input type="hidden" id="hdnSW_KarykariniBethak" name="SW_KarykariniBethak" value="false" />
+                                                <input type="hidden" id="hdnFW_VishayBethak1" name="FW_VishayBethak1" value="false" />
+                                                <input type="hidden" id="hdnFW_VishayBethak2" name="FW_VishayBethak2" value="false" />
+                                                <input type="hidden" id="hdnFW_VishayBethak3" name="FW_VishayBethak3" value="false" />
+                                                <input type="hidden" id="hdnFW_VishayBethak4" name="FW_VishayBethak4" value="false" />
+                                                <input type="hidden" id="hdnFW_VishayBethak5" name="FW_VishayBethak5" value="false" />
+                                                <input type="hidden" id="hdnFW_VistrutBethak" name="FW_VistrutBethak" value="false" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr />
+                                    <div class="offset-md-3 col-md-6">
+
+
+
+                                        <div class="card card-primary card-outline card-outline-tabs">
+                                            <div class="card-header p-0 border-bottom-0">
+                                                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">પ્રથમ બુધવાર વિષય બેઠક</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">ત્રિજો બુધવાર વસ્તી બેઠક</a>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="tab-content" id="custom-tabs-three-tabContent">
+                                                    <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+                                                        <table class="table table-bordered" id="example">
+                                                            <thead class="m-head">
+                                                                <tr>
+                                                                    <th>વિષય બેઠક  </th>
+                                                                    <th style="width: 15%;">Select</th>
+                                                                </tr>
+                                                            </thead>
+                                                            
+                                               
+                                              
+                                               
+                                               
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>શારીરિક </td>
+                                                                    <td>
+                                                                         <input type="checkbox" id="chkFW_VishayBethak1" />
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>બૌદ્ધિક</td>
+                                                                    <td>
+                                                                      <input type="checkbox" id="chkFW_VishayBethak2" />
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>મહાવિધ્યાલયન </td>
+                                                                    <td>
+                                                                         <input type="checkbox" id="chkFW_VishayBethak3" />
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>સેવા</td>
+                                                                    <td>
+                                                                       <input type="checkbox" id="chkFW_VishayBethak4" />
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>તરુણ વ્યવસાયી </td>
+                                                                    <td>
+                                                                        <input type="checkbox" id="chkFW_VishayBethak5" />
+
+                                                                </tr>
+                                                                
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+                                                        <div id="DatalistBethak">
+                                                            @Html.Partial("~/Views/Shared/Partial/_ViewBethak.cshtml", Model)
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- /.card -->
+                                        </div>
+
+                                    </div>
+                                      <div class="col-md-12 text-center">
+        <input type="button" id="btnSaveBethak" class="btn btn-info" value="Submit" onclick="javascript: InsertBethak();">
+    </div>  
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- /.card -->
+
+        </form>
+        <!-- /.container-fluid -->
+    </section>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+            $("#VrutNagar").addClass("nav-link active");
+            $("#Vrut").addClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#Vrutli").addClass("nav-item menu-open");
+            var $N_NagarSelect = InitSelect2FromRemote("#drpN_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+            var $NagarSelect = InitSelect2FromRemote("#drpNagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+            var $S_NagarSelect = InitSelect2FromRemote("#drpS_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+            var $M_NagarSelect = InitSelect2FromRemote("#drpM_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+            var $B_NagarSelect = InitSelect2FromRemote("#drpB_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+            //$('#drpS_Month').change(function () {
+            //    //alert($('#drpBhag option:selected').val());
+            //    if ($('#drpS_Month option:selected').val() != "0" && $('#drpS_Nagar option:selected').val() !="") {
+            //        $.ajax({
+            //            type: "GET",
+            //            url: "/Master/SearchShakhaVrutByMonth",
+            //            data: { NagarID: $('#drpS_Nagar option:selected').val(), MonthID: $('#drpS_Month option:selected').val() },
+            //            timeout: 600000,
+            //            success: function (data) {
+            //                // alert(data.Nagar);
+            //                if (data == "-1") {
+            //                    window.location.href = "/account/logoff";
+            //                }
+
+            //                else {
+            //                    $("#DatalistVrutShakha").html(data);
+            //                    if ($("#hdnStotal").val() == "0") {
+            //                        toastr.error("No Record Found !!");
+            //                    }
+            //                }
+
+            //            },
+            //        });
+            //    }
+
+            //});
+            $('#drpBvarg').change(function () {
+                if ($('#drpBvarg option:selected').text() == "No") {
+                    $("#txtBvargUP").attr("readonly", "true");
+                    $("#txtBvargUP").val("0");
+                } else {
+                    $("#txtBvargUP").removeAttr("readonly", "false");
+                    $("#txtBvargUP").val("");
+
+                }
+            });
+            $('#drpAbyasVarg').change(function () {
+                if ($('#drpAbyasVarg option:selected').text() == "No") {
+                    $("#txtApekshit").attr("readonly", "true");
+                    $("#txtUpsthit").attr("readonly", "true");
+                    $("#txtApekshit").val("0");
+                    $("#txtUpsthit").val("0");
+                } else {
+                    $("#txtApekshit").removeAttr("readonly", "false");
+                    $("#txtUpsthit").removeAttr("readonly", "false");
+                    $("#txtApekshit").val("");
+                    $("#txtUpsthit").val("");
+                }
+            });
+            $('#drpEktrikaran').change(function () {
+                if ($('#drpEktrikaran option:selected').text() == "No") {
+                    $("#txtN_Tarun").attr("readonly", "true");
+                    $("#txtN_Bal").attr("readonly", "true");
+                    $("#txtN_Shishu").attr("readonly", "true");
+                    $("#txtN_Tarun").val("0");
+                    $("#txtN_Bal").val("0");
+                    $("#txtN_Shishu").val("0");
+                    $("#txtN_Yog").val("0");
+                } else {
+                    $("#txtN_Tarun").removeAttr("readonly", "false");
+                    $("#txtN_Bal").removeAttr("readonly", "false");
+                    $("#txtN_Shishu").removeAttr("readonly", "false");
+                    $("#txtN_Tarun").val("");
+                    $("#txtN_Bal").val("");
+                    $("#txtN_Shishu").val("");
+                    $("#txtN_Yog").val("");
+                }
+            });
+            $('#txtN_Bal').change(function () {
+                if ($("#txtN_Bal").val() != "" && $("#txtN_Tarun").val() != "") {
+                    var total = 0;
+                    total = parseInt($("#txtN_Bal").val()) + parseInt($("#txtN_Tarun").val());
+                    // alert(total);
+                    $("#txtN_Yog").val(total);
+                }
+
+            });
+            $('#txtN_Tarun').change(function () {
+                if ($("#txtN_Bal").val() != "" && $("#txtN_Tarun").val() != "") {
+                    var total = 0;
+                    total = parseInt($("#txtN_Bal").val()) + parseInt($("#txtN_Tarun").val());
+                    $("#txtN_Yog").val(total);
+                    //  alert(total);
+                }
+            });
+        });
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : event.keyCode
+            if (charCode != 46 && charCode > 31
+                && (charCode < 48 || charCode > 57))
+                return false;
+
+            return true;
+        }
+        //function Sum(tarunfield, balfield, yogfield) {
+        //    alert(tarunfield.value);
+        //    alert(balfield.value);
+        //    alert(yogfield.value);
+
+        //}
+        function InitSelect2FromRemote(element, url, placeholder, multival, minInputLen, maximumSelectionLength, allowTaging) {  // multival = true or false
+            multival = multival || false;
+            return $(element).select2({
+                tags: allowTaging,
+                placeholder: placeholder,
+                minimumInputLength: minInputLen,
+                maximumSelectionLength: maximumSelectionLength,
+                multiple: multival,
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            term: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data,
+                            more: false
+                        };
+                    },
+                    cache: true
+                },
+            });
+        }
+        function BindNagardata(ddlnagar) {
+
+
+            var selectedText = ddlnagar.options[ddlnagar.selectedIndex].innerHTML;
+            var selectedValue = ddlnagar.value;
+            if (selectedValue != " ") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/Fill_AddNagarVrutDetail",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data != null) {
+
+                            $("#txtNBhag").val(data.Bhag);
+
+                        }
+                        else {
+                            $("#txtNBhag").val('');
+                        }
+
+                    },
+                });
+
+            }
+
+        }
+        function BindShakhadata(ddlnagar) {
+
+            //alert('hi');
+            var selectedText = ddlnagar.options[ddlnagar.selectedIndex].innerHTML;
+            var selectedValue = ddlnagar.value;
+            if (selectedValue != " ") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/Fill_AddNagarVrutDetail",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data != null) {
+
+                            $("#txtSBhag").val(data.Bhag);
+
+                        }
+                        else {
+                            $("#txtSBhag").val('');
+                        }
+                    },
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/SearchShakhaVrut",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+
+                        else {
+                            $("#DatalistVrutShakha").html(data);
+                            if ($("#hdnStotal").val() == "0") {
+                                toastr.error("No Record Found !!");
+                            }
+                        }
+
+                    },
+                });
+
+            }
+
+        }
+        function BindMilandata(ddlnagar) {
+
+
+            var selectedText = ddlnagar.options[ddlnagar.selectedIndex].innerHTML;
+            var selectedValue = ddlnagar.value;
+            if (selectedValue != " ") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/Fill_AddNagarVrutDetail",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data != null) {
+
+                            $("#txtMBhag").val(data.Bhag);
+
+                        }
+                        else {
+                            $("#txtMBhag").val('');
+                        }
+                    },
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/SearchMilanVrut",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+
+                        else {
+                            $("#DatalistVrutMilan").html(data);
+                            if ($("#hdnMtotal").val() == "0") {
+                                toastr.error("No Record Found !!");
+                            }
+                        }
+
+                    },
+                });
+
+            }
+
+        }
+        $("#btnSearch").click(function () {
+            // alert($('#drpNagar option:selected').val());
+
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpNagar").val() == "") {
+                    toastr.error("Please Select nagar");
+                    $("#drpNagar").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpMonth").val() == "0") {
+                    toastr.error("Please Select Month");
+                    $("#drpMonth").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/SearchNagarVrut",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+
+                        else {
+                            $("#DatalistVrutNagar").html(data);
+                            if ($("#hdntotal").val() == "0") {
+                                toastr.error("No Record Found !!");
+                            }
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+
+        $("#btnSaveNagar").click(function () {
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpN_Nagar").val() == "") {
+                    toastr.error("Please Select Nagar");
+                    $("#drpN_Nagar").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#drpN_Month").val() == "0") {
+                    toastr.error("Please Select Month");
+                    $("#drpN_Month").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtBethak").val() == "") {
+                    toastr.error("Please Enter Bethak");
+                    $("#txtBethak").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtBethak").val() == "") {
+                    toastr.error("Please Enter Bethak");
+                    $("#txtBethak").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpBvarg").val() == "0") {
+                    toastr.error("Please Select Baudhik Varg");
+                    $("#drpBvarg").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#txtBvargUP").val() == "") {
+                    toastr.error("Please Enter Baudhik Varg Upstithi");
+                    $("#txtBvargUP").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#drpAbyasVarg").val() == "0") {
+                    toastr.error("Please Select AbyasVarg");
+                    $("#drpAbyasVarg").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#txtApekshit").val() == "") {
+                    toastr.error("Please Enter Apekshit");
+                    $("#txtApekshit").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtUpsthit").val() == "") {
+                    toastr.error("Please Enter Upsthit");
+                    $("#txtUpsthit").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#drpEktrikaran").val() == "0") {
+                    toastr.error("Please Enter Ektrikaran");
+                    $("#drpEktrikaran").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtN_Tarun").val() == "") {
+                    toastr.error("Please Enter Tarun");
+                    $("#txtN_Tarun").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtN_Bal").val() == "") {
+                    toastr.error("Please Enter Bal");
+                    $("#txtN_Bal").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                if ($("#txtN_Shishu").val() == "") {
+                    toastr.error("Please Enter Shishu");
+                    $("#txtN_Shishu").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            //drpSevaUP
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/InsertNagarVrut",
+                    data: $("#frmrss").serialize(),
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+                        else if (data == "0") {
+                            toastr.error("Error!!");
+                        }
+                        else {
+                            toastr.info("Record Save Successfully!!");
+                            ClearNagar();
+                            $.ajax({
+                                type: "GET",
+                                url: "/Master/ClearNagarVrutList",
+
+                                timeout: 600000,
+                                success: function (data) {
+
+                                    if (data == "0") {
+
+                                        toastr.error("Record Not Found!! ");
+
+                                    }
+                                    else {
+                                        $("#DroplistNagar").html(data);
+                                        var $N_NagarSelect = InitSelect2FromRemote("#drpN_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+
+                                    }
+
+                                },
+                            });
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+
+            return TValidate;
+        });
+        function ClearNagar() {
+            $("#txtNBhag").val('');
+            $("#txtBethak").val('');
+            $("#txtBvargUP").val('');
+            $("#txtApekshit").val('');
+
+            $("#txtUpsthit").val('');
+            $("#txtN_Tarun").val('');
+            $("#txtN_Bal").val('');
+            $("#txtN_Yog").val('');
+            $("#txtN_Shishu").val('');
+
+            $("#drpN_Month").val('0');
+            $("#drpAbyasVarg").val('0');
+            $("#drpEktrikaran").val('0');
+            $("#drpBvarg").val('0');
+
+            $("#hdnNVID").val('');
+            $.ajax({
+                type: "GET",
+                url: "/Master/ClearNagarVrutList",
+
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#DroplistNagar").html(data);
+                        var $N_NagarSelect = InitSelect2FromRemote("#drpN_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                    }
+
+                },
+            });
+
+        }
+
+        function UpdateNagar(NVID, NagarID, N_MonthID, Bethak, Bvarg, BvargUP, AbyasVarg, Apekshit, Upsthit, Ektrikaran, N_Tarun, N_Bal, N_Yog, N_Shishu, Bhag) {
+            // alert(VastiID);
+
+            $("#hdnNVID").val(NVID);
+
+            $("#txtBvargUP").val(BvargUP);
+            $("#txtApekshit").val(Apekshit);
+            $("#txtUpsthit").val(Upsthit);
+            $("#txtN_Tarun").val(N_Tarun);
+            $("#txtN_Bal").val(N_Bal);
+            $("#txtN_Shishu").val(N_Shishu);
+            $("#txtN_Yog").val(N_Yog);
+
+            $("#txtBethak").val(Bethak);
+            $("#drpBvarg").val(Bvarg);
+            $("#txtNBhag").val(Bhag);
+            $("#drpN_Month").val(N_MonthID);
+            $("#drpAbyasVarg").val(AbyasVarg)
+            $("#drpEktrikaran").val(Ektrikaran);
+
+            if ($('#drpBvarg option:selected').text() == "No") {
+                $("#txtBvargUP").attr("readonly", "true");
+
+            } else {
+                $("#txtBvargUP").removeAttr("readonly", "false");
+
+
+            }
+            if ($('#drpAbyasVarg option:selected').text() == "No") {
+                $("#txtApekshit").attr("readonly", "true");
+                $("#txtUpsthit").attr("readonly", "true");
+
+            } else {
+                $("#txtApekshit").removeAttr("readonly", "false");
+                $("#txtUpsthit").removeAttr("readonly", "false");
+
+            }
+
+
+            if ($('#drpEktrikaran option:selected').text() == "No") {
+                $("#txtN_Tarun").attr("readonly", "true");
+                $("#txtN_Bal").attr("readonly", "true");
+                $("#txtN_Shishu").attr("readonly", "true");
+
+            } else {
+                $("#txtN_Tarun").removeAttr("readonly", "false");
+                $("#txtN_Bal").removeAttr("readonly", "false");
+                $("#txtN_Shishu").removeAttr("readonly", "false");
+
+            }
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/N_NagarByID",
+                data: { NagarID: NagarID },
+                timeout: 600000,
+                success: function (data) {
+
+                    $("#DroplistNagar").html(data);
+                    var $N_NagarSelect = InitSelect2FromRemote("#drpN_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                }
+            });
+            // $("#drpSevavasti").val(AssignSVID);
+        }
+
+
+        function InsertShakha() {
+
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpS_Nagar").val() == "") {
+                    toastr.error("Please Select Nagar");
+                    $("#drpN_Nagar").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#drpS_Month").val() == "0") {
+                    toastr.error("Please Select Month");
+                    $("#drpS_Month").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                var i = 0;
+                $("#tblShakha tr").each(function () {
+                    if (i != 0) {
+                        var col1_value = $(this).find("td").eq(1).find(":text").val();
+                        var col6_value = $(this).find("td").eq(1).find(":hidden").val();
+                        var col2_value = $(this).find("td").eq(2).find(":text").val();
+                        var col3_value = $(this).find("td").eq(3).find(":text").val();
+                        var col4_value = $(this).find("td").eq(4).find(":text").val();
+                        var col5_value = $(this).find("td").eq(4).find(":hidden").val();
+
+                        // alert('Col 1' + col1_value + ' Col 2' + col2_value + ' Col 3 ' + col3_value + ' Col 4 ' + col4_value);
+                        if (col1_value == "") {
+
+                            TValidate = false;
+                        }
+                        if (col2_value == "") {
+
+
+                            TValidate = false;
+                        }
+                        if (col4_value == "") {
+
+
+                            TValidate = false;
+                        }
+                        if (TValidate) {
+                            //alert(col6_value);
+                            $.ajax({
+                                type: "POST",
+                                url: "/Master/InsertShakhaVrut",
+                                data: { SUPVID: col6_value, S_MonthID: $('#drpS_Month option:selected').val(), ShakhaID: col5_value, S_Tarun: col1_value, S_Bal: col2_value, S_Yog: col3_value, S_Shishu: col4_value, S_NagarID: $('#drpS_Nagar option:selected').val() },
+                                timeout: 600000,
+                                success: function (data) {
+
+                                    if (data == "-1") {
+                                        window.location.href = "/account/logoff";
+                                    }
+                                    else if (data == "0") {
+                                        toastr.error("Error!!");
+                                    }
+
+                                },
+
+                            });
+                        }
+                        else {
+                            toastr.error("Please Enter Required Field");
+                            return TValidate;
+                        }
+
+                    }
+                    i++;
+                })
+
+                ClearShakha();
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/ClearShakhaVrutList",
+
+                    timeout: 600000,
+                    success: function (data) {
+
+                        if (data == "0") {
+
+                            toastr.error("Record Not Found!! ");
+
+                        }
+                        else {
+                            $("#DroplistShakha").html(data);
+                            var $S_NagarSelect = InitSelect2FromRemote("#drpS_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+
+                        }
+
+                    },
+                });
+                toastr.info("Record Save Successfully!!");
+            }
+            return TValidate;
+        }
+        function ClearShakha() {
+            $("#txtSBhag").val('');
+            $("#drpS_Month").val('0');
+
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/ClearNagarVrutList",
+
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#DroplistNagar").html(data);
+                        var $N_NagarSelect = InitSelect2FromRemote("#drpN_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                    }
+
+                },
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchShakhaVrut",
+                data: { NagarID: 0 },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+
+                    else {
+                        $("#DatalistVrutShakha").html(data);
+
+                    }
+
+                },
+            });
+        }
+
+        function UpdateShakha(NagarID, N_MonthID, Bhag) {
+            // alert('hi');
+            $("#txtSBhag").val(Bhag);
+            $("#drpS_Month").val(N_MonthID);
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/S_NagarByID",
+                data: { NagarID: NagarID },
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#DroplistShakha").html(data);
+                        var $S_NagarSelect = InitSelect2FromRemote("#drpS_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+
+                    }
+
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchShakhaVrutByMonth",
+                data: { NagarID: NagarID, MonthID: N_MonthID },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+
+                    else {
+                        $("#DatalistVrutShakha").html(data);
+                        if ($("#hdnStotal").val() == "0") {
+                            toastr.error("No Record Found !!");
+                        }
+                    }
+
+                },
+            });
+
+
+        }
+
+
+        function InsertMilan() {
+
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+            if (TValidate) {
+                if ($("#drpM_Nagar").val() == "") {
+                    toastr.error("Please Select Nagar");
+                    $("#drpM_Nagar").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#drpM_Month").val() == "0") {
+                    toastr.error("Please Select Month");
+                    $("#drpM_Month").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+                var i = 0;
+                $("#tblMilan tr").each(function () {
+                    if (i != 0) {
+                        var col1_value = $(this).find("td").eq(1).find(":text").val();
+                        var col6_value = $(this).find("td").eq(1).find(":hidden").val();
+                        var col2_value = $(this).find("td").eq(2).find(":text").val();
+                        var col3_value = $(this).find("td").eq(3).find(":text").val();
+                        var col4_value = $(this).find("td").eq(4).find(":text").val();
+                        var col5_value = $(this).find("td").eq(4).find(":hidden").val();
+
+                        // alert('Col 1' + col1_value + ' Col 2' + col2_value + ' Col 3 ' + col3_value + ' Col 4 ' + col4_value);
+                        if (col1_value == "") {
+
+                            TValidate = false;
+                        }
+                        if (col2_value == "") {
+
+
+                            TValidate = false;
+                        }
+                        if (col4_value == "") {
+
+
+                            TValidate = false;
+                        }
+                        if (TValidate) {
+                            //alert(col6_value);
+                            $.ajax({
+                                type: "POST",
+                                url: "/Master/InsertMilanVrut",
+                                data: { MVID: col6_value, M_MonthID: $('#drpM_Month option:selected').val(), MilanID: col5_value, M_Tarun: col1_value, M_Bal: col2_value, M_Yog: col3_value, M_Shishu: col4_value, M_NagarID: $('#drpM_Nagar option:selected').val() },
+                                timeout: 600000,
+                                success: function (data) {
+
+                                    if (data == "-1") {
+                                        window.location.href = "/account/logoff";
+                                    }
+                                    else if (data == "0") {
+                                        toastr.error("Error!!");
+                                    }
+
+                                },
+
+                            });
+                        }
+                        else {
+                            toastr.error("Please Enter Required Field");
+                            return TValidate;
+                        }
+
+                    }
+                    i++;
+                })
+
+                ClearMilan();
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/ClearMilanVrutList",
+
+                    timeout: 600000,
+                    success: function (data) {
+
+                        if (data == "0") {
+
+                            toastr.error("Record Not Found!! ");
+
+                        }
+                        else {
+                            $("#DroplistMilan").html(data);
+                            var $M_NagarSelect = InitSelect2FromRemote("#drpM_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+
+                        }
+
+                    },
+                });
+                toastr.info("Record Save Successfully!!");
+            }
+            return TValidate;
+        }
+        function ClearMilan() {
+            $("#txtMBhag").val('');
+            $("#drpM_Month").val('0');
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/ClearMilanVrutList",
+
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#DroplistMilan").html(data);
+                        var $M_NagarSelect = InitSelect2FromRemote("#drpM_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                    }
+
+                },
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchMilanVrut",
+                data: { NagarID: 0 },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+
+                    else {
+                        $("#DatalistVrutMilan").html(data);
+
+                    }
+
+                },
+            });
+        }
+
+        function UpdateMilan(NagarID, M_MonthID, Bhag) {
+            // alert('hi');
+            $("#txtMBhag").val(Bhag);
+            $("#drpM_Month").val(M_MonthID);
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/M_NagarByID",
+                data: { NagarID: NagarID },
+                timeout: 600000,
+                success: function (data) {
+
+                    $("#DroplistMilan").html(data);
+                    var $M_NagarSelect = InitSelect2FromRemote("#drpM_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                }
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchMilanVrutByMonth",
+                data: { NagarID: NagarID, MonthID: M_MonthID },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+
+                    else {
+                        $("#DatalistVrutMilan").html(data);
+                        if ($("#hdnMtotal").val() == "0") {
+                            toastr.error("No Record Found !!");
+                        }
+                    }
+
+                },
+            });
+
+
+        }
+
+        function BindBethakdata(ddlnagar) {
+
+            $('#txtTW_VastiBethak').val('0');
+            var selectedText = ddlnagar.options[ddlnagar.selectedIndex].innerHTML;
+            var selectedValue = ddlnagar.value;
+            if (selectedValue != " ") {
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/Fill_AddBethakDetail",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data != null) {
+
+                            $("#txtBBhag").val(data.Bhag);
+
+                        }
+                        else {
+                            $("#txtBBhag").val('');
+                        }
+                    },
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "/Master/SearchBethak",
+                    data: { NagarID: selectedValue },
+                    timeout: 600000,
+                    success: function (data) {
+                        // alert(data.Nagar);
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+
+                        else {
+                            $("#DatalistBethak").html(data);
+                            //alert($("#hdnBtotal").val());
+                            if ($("#hdnBtotal").val() == "0") {
+                                toastr.error("No Record Found !!");
+                            }
+                        }
+
+                    },
+                });
+
+            }
+
+        }
+        $('#chkFW_VishayBethak1').change(function () {
+
+            $('#hdnFW_VishayBethak1').val(this.checked);
+            // alert($('#hdnFW_VishayBethak').val());
+        });
+        $('#chkFW_VishayBethak2').change(function () {
+
+            $('#hdnFW_VishayBethak2').val(this.checked);
+            // alert($('#hdnFW_VishayBethak').val());
+        });
+        $('#chkFW_VishayBethak3').change(function () {
+
+            $('#hdnFW_VishayBethak3').val(this.checked);
+            // alert($('#hdnFW_VishayBethak').val());
+        });
+        $('#chkFW_VishayBethak4').change(function () {
+
+            $('#hdnFW_VishayBethak4').val(this.checked);
+            // alert($('#hdnFW_VishayBethak').val());
+        });
+        $('#chkFW_VishayBethak5').change(function () {
+
+            $('#hdnFW_VishayBethak5').val(this.checked);
+            // alert($('#hdnFW_VishayBethak').val());
+        });
+        $('#chkSW_KarykariniBethak').change(function () {
+
+            $('#hdnSW_KarykariniBethak').val(this.checked);
+            // alert($('#hdnSW_KarykariniBethak').val());
+        });
+        $('#chkFW_VistrutBethak').change(function () {
+
+            $('#hdnFW_VistrutBethak').val(this.checked);
+            //alert($('#hdnFW_VistrutBethak').val());
+
+        });
+        function InsertBethak() {
+
+            // alert($('#drpNagar option:selected').val());
+            var TValidate = true;
+
+            $VastIDs = $("#example2 input:checkbox:checked").map(function () {
+                return $(this).attr("id");
+
+            }).get();
+            $('#hdnBVastiIDs').val($VastIDs);
+            // alert($('#hdnBVastiIDs').val());
+            //if ($VastIDs == "") {
+            //    TValidate = false;
+            //    toastr.error("Please Select Vasti");
+            //}
+
+            if (TValidate) {
+                if ($("#drpB_Nagar").val() == "") {
+                    toastr.error("Please Select Nagar");
+                    $("#drpB_Nagar").focus();
+                    TValidate = false;
+                }
+
+            }
+
+            if (TValidate) {
+                if ($("#drpB_Month").val() == "0") {
+                    toastr.error("Please Select Month");
+                    $("#drpB_Month").focus();
+                    TValidate = false;
+                }
+
+            }
+            if (TValidate) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Master/InsertBethak",
+                    data: { BethakID: $('#hdnBethakID').val(), B_MonthID: $('#drpB_Month option:selected').val(), B_NagarID: $('#drpB_Nagar option:selected').val(), TW_VastiBethak: $('#txtTW_VastiBethak').val(), BVastiIDs: $('#hdnBVastiIDs').val(), FW_VishayBethak1: $('#hdnFW_VishayBethak1').val(), FW_VishayBethak2: $('#hdnFW_VishayBethak2').val(), FW_VishayBethak3: $('#hdnFW_VishayBethak3').val(), FW_VishayBethak4: $('#hdnFW_VishayBethak4').val(), FW_VishayBethak5: $('#hdnFW_VishayBethak5').val(), SW_KarykariniBethak: $('#hdnSW_KarykariniBethak').val(), FW_VistrutBethak: $('#hdnFW_VistrutBethak').val() },
+                    timeout: 600000,
+                    beforeSend: function () {
+                        $('#milan').css("display", 'block');
+                    },
+                    success: function (data) {
+
+                        if (data == "-1") {
+                            window.location.href = "/account/logoff";
+                        }
+                        else if (data == "0") {
+                            toastr.error("Error!!");
+                        }
+                        else {
+                            toastr.info("Record Save Successfully!!");
+                            ClearBethak();
+                            $.ajax({
+                                type: "GET",
+                                url: "/Master/ClearBethakList",
+
+                                timeout: 600000,
+                                success: function (data) {
+
+                                    if (data == "0") {
+
+                                        toastr.error("Record Not Found!! ");
+
+                                    }
+                                    else {
+                                        $("#DroplistBethak").html(data);
+                                        var $N_NagarSelect = InitSelect2FromRemote("#drpB_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+
+                                    }
+
+                                },
+                            });
+                        }
+                    },
+                    complete: function () {
+                        $('#milan').css("display", 'none');
+                    },
+                });
+            }
+            return TValidate;
+        }
+        function ClearBethak() {
+            $("#txtBBhag").val('');
+            $("#drpB_Month").val('0');
+            $('#hdnFW_VishayBethak1').val('false');
+            $('#hdnFW_VishayBethak2').val('false');
+            $('#hdnFW_VishayBethak3').val('false');
+            $('#hdnFW_VishayBethak4').val('false');
+            $('#hdnFW_VishayBethak5').val('false');
+
+            $('#hdnSW_KarykariniBethak').val('false');
+            $('#hdnFW_VistrutBethak').val('false');
+
+            $('#chkFW_VishayBethak1').prop('checked', false);
+            $('#chkFW_VishayBethak2').prop('checked', false);
+            $('#chkFW_VishayBethak3').prop('checked', false);
+            $('#chkFW_VishayBethak4').prop('checked', false);
+            $('#chkFW_VishayBethak5').prop('checked', false);
+            $('#chkSW_KarykariniBethak').prop('checked', false);
+            $('#chkFW_VistrutBethak').prop('checked', false);
+            $('#txtTW_VastiBethak').val('');
+            $("#DatalistBethak").html('');
+            $.ajax({
+                type: "GET",
+                url: "/Master/ClearBethakList",
+
+                timeout: 600000,
+                success: function (data) {
+
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+                    else if (data == "0") {
+
+                        toastr.error("Record Not Found!! ");
+
+                    }
+                    else {
+                        $("#DroplistBethak").html(data);
+                        var $M_NagarSelect = InitSelect2FromRemote("#drpB_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                    }
+
+                },
+            });
+
+        }
+        function UpdateBethak(NagarID, M_MonthID, Bhag) {
+            //alert(NagarID);
+            $("#txtBBhag").val(Bhag);
+            $("#drpB_Month").val(M_MonthID);
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/B_NagarByID",
+                data: { NagarID: NagarID },
+                timeout: 600000,
+                success: function (data) {
+
+                    $("#DroplistBethak").html(data);
+                    var $B_NagarSelect = InitSelect2FromRemote("#drpB_Nagar", "/Master/GetNagarDrpList", "Select Nagar", true, 1, 1, false);
+
+                }
+            });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/Master/Fill_AddBethakDetailonUpdate",
+                data: { NagarID: NagarID, MonthID: M_MonthID },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+
+                    else {
+
+                        $('#hdnFW_VishayBethak1').val(data.FW_VishayBethak1);
+                        $('#hdnFW_VishayBethak2').val(data.FW_VishayBethak2);
+                        $('#hdnFW_VishayBethak3').val(data.FW_VishayBethak3);
+                        $('#hdnFW_VishayBethak4').val(data.FW_VishayBethak4);
+                        $('#hdnFW_VishayBethak5').val(data.FW_VishayBethak5);
+
+                        $('#hdnSW_KarykariniBethak').val(data.SW_KarykariniBethak);
+                        $('#hdnFW_VistrutBethak').val(data.FW_VistrutBethak);
+                        $('#hdnBethakID').val(data.BethakID);
+                        //alert($('#hdnBethakID').val());
+                        if ($('#hdnFW_VishayBethak1').val().toString().toLowerCase() == "true") {
+                            $('#chkFW_VishayBethak1').prop('checked', true);
+                        }
+                        else {
+                            $('#chkFW_VishayBethak1').prop('checked', false);
+                        }
+
+                        if ($('#hdnFW_VishayBethak2').val().toString().toLowerCase() == "true") {
+                            $('#chkFW_VishayBethak2').prop('checked', true);
+                        }
+                        else {
+                            $('#chkFW_VishayBethak2').prop('checked', false);
+                        }
+                        if ($('#hdnFW_VishayBethak3').val().toString().toLowerCase() == "true") {
+                            $('#chkFW_VishayBethak3').prop('checked', true);
+                        }
+                        else {
+                            $('#chkFW_VishayBethak3').prop('checked', false);
+                        }
+                        if ($('#hdnFW_VishayBethak4').val().toString().toLowerCase() == "true") {
+                            $('#chkFW_VishayBethak4').prop('checked', true);
+                        }
+                        else {
+                            $('#chkFW_VishayBethak4').prop('checked', false);
+                        }
+                        if ($('#hdnFW_VishayBethak5').val().toString().toLowerCase() == "true") {
+                            $('#chkFW_VishayBethak5').prop('checked', true);
+                        }
+                        else {
+                            $('#chkFW_VishayBethak5').prop('checked', false);
+                        }
+
+
+                        if ($('#hdnSW_KarykariniBethak').val().toString().toLowerCase() == "true") {
+                            $('#chkSW_KarykariniBethak').prop('checked', true);
+                        }
+                        else {
+                            $('#chkSW_KarykariniBethak').prop('checked', false);
+                        }
+                        if ($('#hdnFW_VistrutBethak').val().toString().toLowerCase() == "true") {
+                            $('#chkFW_VistrutBethak').prop('checked', true);
+                        }
+                        else {
+                            $('#chkFW_VistrutBethak').prop('checked', false);
+                        }
+
+
+                        $('#txtTW_VastiBethak').val(data.TW_VastiBethak);
+
+                    }
+
+                },
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Master/SearchBethakByMonth",
+                data: { NagarID: NagarID, MonthID: M_MonthID },
+                timeout: 600000,
+                success: function (data) {
+                    // alert(data.Nagar);
+                    if (data == "-1") {
+                        window.location.href = "/account/logoff";
+                    }
+
+                    else {
+                        $("#DatalistBethak").html(data);
+                        if ($("#hdnBtotal").val() == "0") {
+                            toastr.error("No Record Found !!");
+                        }
+                    }
+
+                },
+            });
+        }
+    </script>
+}

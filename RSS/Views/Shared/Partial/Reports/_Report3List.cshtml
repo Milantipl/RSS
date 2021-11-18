@@ -1,0 +1,60 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    var TotalSevaVastiTotal = 0; var ShakhaSevaVastiTotal = 0; var SKYSVTotal = 0; var SVSSTotal = 0; var SUSSTotal = 0;
+}
+
+<table class="table table-bordered text-center mb-0">
+    <thead>
+        <tr class="bg-primary">
+            <th class="align-middle">ક્રમ</th>
+            <th class="align-middle">ભાગ</th>
+            <th class="align-middle">કુલ સેવા વસ્તી</th>
+            <th class="align-middle">શાખા યુક્ત સેવા વસ્તી </th>
+            <th class="align-middle">સેવા કાર્ય યુક્ત સેવા વસ્તી </th>
+            <th class="align-middle">સેવા વસ્તી માં નિયમિત સંપર્કવાલી શાખા</th>
+            <th class="align-middle">સેવા ઉપક્રમ શીલ શાખા </th>
+            <th class="align-middle">નગરના કુલ પ્રવાસી કાર્યકર્તા</th>
+            <th class="align-middle">નગરમાં પ્રવાસ કરનાર કાર્યકર્તા</th>
+            <th class="align-middle">નગરમાં થયેલ કુલ પ્રવાસ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ConnectionLibrary.Model.Reports.Report3 item in Model.Report3List)
+        {
+            <tr>
+                <td>@item.SrNo</td>
+                <td>@item.Bhag</td>
+                <td>@item.TotalSevaVasti</td>
+                <td>@item.ShakhaSevaVasti</td>
+                <td>@item.SKYSV</td>
+                <td>@item.SVSS</td>
+                <td>@item.SUSS</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+            </tr>
+            
+            {
+                TotalSevaVastiTotal = TotalSevaVastiTotal + item.TotalSevaVasti;
+                ShakhaSevaVastiTotal = ShakhaSevaVastiTotal + item.ShakhaSevaVasti;
+                SKYSVTotal = SKYSVTotal + item.SKYSV;
+                SVSSTotal = SVSSTotal + item.SVSS;
+                SUSSTotal = SUSSTotal + item.SUSS;
+                
+            }
+        }
+    </tbody>
+    <tfoot class="bg-warning">
+        <tr>
+            <td colspan="2" accesskey>યોગ</td>
+            <td>@TotalSevaVastiTotal</td>
+            <td>@ShakhaSevaVastiTotal</td>
+            <td>@SKYSVTotal</td>
+            <td>@SVSSTotal</td>
+            <td>@SUSSTotal</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+    </tfoot>
+</table>

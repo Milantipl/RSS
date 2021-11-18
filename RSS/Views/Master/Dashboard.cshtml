@@ -1,0 +1,235 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+   
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <div class="card card-info">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="offset-md-8 col-md-4">
+                            <div class="form-group row">
+                                <label for="inputEmail3" class="col-sm-4 text-right col-form-label">માસ:</label>
+                                <div class="col-sm-8">
+                                    @Html.DropDownListFor(x => Model.SearchMonthID, new SelectList(Model.ListMonth, "MonthID", "Month"), htmlAttributes: new { @class = "form-control", id = "drpMonth" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="DivDashbordCount">
+                        @Html.Partial("~/Views/Shared/Partial/_DashboardCount.cshtml", Model)
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-9">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">શાખા સ્થિતિ</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                 <div  id="DivDashboardShakhaSthiti_LineChart">
+                                @Html.Partial("~/Views/Shared/Partial/_DashboardShakhaSthiti_LineChart.cshtml", Model)
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-lg-3">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">સરેરાશ ઉપસ્થિતિ</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label">તરુણ:</label>
+                                <label class="col-sm-8 col-form-label">10000</label>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label">બાલ:</label>
+                                <label class="col-sm-8 col-form-label">તરુણ:</label>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label">યોગ:</label>
+                                <label class="col-sm-8 col-form-label">તરુણ:</label>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4 col-form-label">શિશુ:</label>
+                                <label class="col-sm-8 col-form-label">તરુણ:</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-6">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">નિવાસી કાર્યકર્તા – કાર્યવિહીન વસ્તી</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                             <div  style="height:200px; overflow-y:scroll" id="DivKaryaVihinVasti">
+                                @Html.Partial("~/Views/Shared/Partial/_DashboardKaryaVihinVasti.cshtml", Model)
+                                 </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-lg-6">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">બંધ શાખા</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div  style="height:200px; overflow-y:scroll" id="DivDashbordBandhShakha">
+                                @Html.Partial("~/Views/Shared/Partial/_DashboardBandhshakha.cshtml", Model)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-6">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">ઉપસ્થિતિ MIS</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                           
+                              <div  id="DivDashboardUpstithiMIS_BarChart">
+                                @Html.Partial("~/Views/Shared/Partial/_DashboardUpstithiMIS_BarChart.cshtml", Model)
+                                 </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="col-lg-6">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">નગર MIS</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                             <div  id="DivDashboardNagarMIS_BarChart">
+                                @Html.Partial("~/Views/Shared/Partial/_DashboardNagarMIS_BarChart.cshtml", Model)
+                                 </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.history.pushState(null, "", window.location.href);
+
+            window.onpopstate = function () {
+
+                window.history.pushState(null, "", window.location.href);
+            }
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#dashboard").addClass("nav-link active");
+        });
+        $('#drpMonth').change(function () {
+
+            //$('#drpMonth').val(this.checked);
+            $.ajax({
+                type: "GET",
+                url: "/Master/DashboardLazyLoad",
+                data: { MonthID: $('#drpMonth').val() },
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    $("#DivDashbordCount").html('');
+                    $("#DivDashbordCount").html(data.DashboardCountString);
+                    $("#DivDashbordBandhShakha").html('');
+                    $("#DivDashbordBandhShakha").html(data.DashboardBandhShakhaString);
+
+                    $("#DivKaryaVihinVasti").html('');
+                    $("#DivKaryaVihinVasti").html(data.DashboardNivasiKaryakartaString);
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+
+        });
+    </script>
+}

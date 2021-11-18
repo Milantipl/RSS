@@ -1,0 +1,106 @@
+﻿@model ConnectionLibrary.Model.Result
+@{
+    ViewBag.Title = "Report 2";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+   
+}
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Report-3</h1>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="@Url.Action("Dashboard","Master")">Home</a></li>
+                        <li class="breadcrumb-item active">Report-3</li>
+                    </ol>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card card-info mt-5">
+                <div class="card-header py-1 ">
+                    <div class="form-group row float-right mb-0">
+                        <input type="hidden" id="hfGridHtml" name="GridHtml" />
+                        <button type="submit" class="col-sm-12  btn btn-light btn-sm " id="btnExport"><i style="font-size: 18px" class="text-dark fa-download fa"></i></button>
+                        @*}*@
+
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <div id="divListing">
+                            @Html.Partial("~/Views/Shared/Partial/Reports/_Report3List.cshtml", Model)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <!-- /.card -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+</div>
+@section scripts
+{
+    <script src="~/Content/dist/js/table2excel.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("a").filter(".nav-link active").removeClass("nav-link active");
+
+            $("#Reports").addClass("nav-link active");
+            $("#report3").addClass("nav-link active");
+            $("li").filter(".nav-item menu-open").removeClass("nav-item menu-open");
+            $("#Reportsli").addClass("nav-item menu-open");
+
+        });
+
+
+        $('#drpMonth').change(function () {
+
+            //$('#drpMonth').val(this.checked);
+            $.ajax({
+                type: "GET",
+                url: "/Report/Report2LazyLoad",
+                data: { MonthID: $('#drpMonth').val() },
+                timeout: 600000,
+                beforeSend: function () {
+                    $('#milan').css("display", 'block');
+                },
+                success: function (data) {
+                    $("#divListing").html('')
+                    $("#divListing").html(data)
+                },
+                complete: function () {
+                    $('#milan').css("display", 'none');
+                },
+            });
+
+        });
+
+
+        $("[id*=btnExport]").click(function () {
+            $("[id*=hfGridHtml]").val($("#divListing").html());
+
+            $("#divListing").table2excel({
+                filename: "Report3.xls"
+            });
+
+        });
+
+
+
+
+    </script>
+}
