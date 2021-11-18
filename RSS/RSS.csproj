@@ -313,6 +313,8 @@
     <Content Include="Views\Report\Report5.cshtml" />
     <Content Include="Views\Shared\Partial\Reports\_Report13List.cshtml" />
     <Content Include="Views\Master\MSevavasti.cshtml" />
+    <Content Include="Views\Shared\Partial\_ViewMSevaVasti.cshtml" />
+    <Content Include="Views\Shared\Partial\_ViewMsYSevaVasti.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConnectionLibrary\ConnectionLibrary.csproj">
