@@ -188,6 +188,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ExcelData\" />
     <Folder Include="Models\" />
     <Folder Include="Report4\" />
   </ItemGroup>
@@ -311,6 +312,7 @@
     <Content Include="Views\Shared\Partial\_DashboardNagarMIS_BarChart.cshtml" />
     <Content Include="Views\Report\Report5.cshtml" />
     <Content Include="Views\Shared\Partial\Reports\_Report13List.cshtml" />
+    <Content Include="Views\Master\MSevavasti.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConnectionLibrary\ConnectionLibrary.csproj">
