@@ -2,7 +2,10 @@
 using ConnectionLibrary.Repository;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -1677,7 +1680,9 @@ namespace RSS.Controllers
 
         #region MotoBhag
 
-        public ActionResult MSevavasti()
+        SqlConnection DB = new SqlConnection(ConfigurationManager.ConnectionStrings["DB"].ConnectionString);
+        OleDbConnection Econ;
+        public ActionResult MSevavasti(HttpPostedFileBase file)
         {
             var model = new Result();
             if (Session["UID"] != null)
@@ -1692,65 +1697,18 @@ namespace RSS.Controllers
                 else if (model.UserDetail.Roleid.ToString().Trim() == "3")
                 {
                     model.ListBhag = model.ListBhag.Where(x => x.BhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
-
                 }
-                var firstitembhag = new _Bhag();
-                firstitembhag.BhagID = 0;
-                firstitembhag.Bhag = "--Select Bhag---";
-                model.ListBhag.Insert(0, firstitembhag);
-
-                model.ListNagar = new List<_Nagar>();
-                var firstitemnagar = new _Nagar();
-                firstitemnagar.NagarID = 0;
-                firstitemnagar.Nagar = "--Select Nagar---";
-                model.ListNagar.Insert(0, firstitemnagar);
-
-                model.ListSearchVasti = new List<_Vasti>();
-                var firstitemSearchvasti = new _Vasti();
-                firstitemSearchvasti.VastiID = 0;
-                firstitemSearchvasti.Vasti = "--Select Vasti---";
-                model.ListSearchVasti.Insert(0, firstitemSearchvasti);
-
-                model.ListShakha = new List<_Shakha>();
-                var firstitemShakha = new _Shakha();
-                firstitemShakha.ShakhaID = 0;
-                firstitemShakha.ShakhaName = "--Select Shakha---";
-                model.ListShakha.Insert(0, firstitemShakha);
-
-                model.ListSevavasti = new List<_Sevavasti>();
-                var firstitemSevavasti = new _Sevavasti();
-                firstitemSevavasti.SVID = 0;
-                firstitemSevavasti.SevaVasti = "--Select Sevavasti---";
-                model.ListSevavasti.Insert(0, firstitemSevavasti);
-
-                model.ListSevaKary = MasterRepository.GetListSevakary();
-                var firstitemSevaKary = new _Sevakary();
-                firstitemSevaKary.SKID = 0;
-                firstitemSevaKary.SevaKary = "--Select SevaKary---";
-                model.ListSevaKary.Insert(0, firstitemSevaKary);
-
-
-                model.ListVasti = MasterRepository.GetListVasti_Nagar();
-
-                model.p = model.p == 0 ? 1 : model.p;
-                var Total = 0;
-                var WhereClause = " where 1=1 ";
-                if (model.UserDetail.Roleid.ToString().Trim() == "2")
+                if (file != null)
                 {
-
-                    WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-
-
+                    string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                    string filepath = "/ExcelData/" + filename;
+                    file.SaveAs(Path.Combine(Server.MapPath("/ExcelData"), filename));
+                    InsertExceldata(filepath, filename);
                 }
-                else if (model.UserDetail.Roleid.ToString().Trim() == "3")
+                else
                 {
-                    WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-
+                    ViewBag.Message = "File not Upload";
                 }
-                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause, model.p, model.size, out Total);
-                model.Total = Total;
-                var pager = new Pager(model.Total, model.p);
-                model.pager = pager;
             }
             else
             {
@@ -1759,298 +1717,56 @@ namespace RSS.Controllers
             return View(model);
         }
 
-        public ActionResult MFill_AddSevavastiDetail(string VastiID)
+        private void ExcelConn(string filepath)
         {
-            if (Session["UID"] != null)
-            {
-                var vastiids = string.Empty;
-                if (VastiID != null)
-                {
-                    var Vasti = new List<_Vasti>();
-                    var ShakhaList = new List<_Shakha>();
-                    var nagarid = MasterRepository.GetListVasti().Where(m => m.VastiID == Convert.ToInt32(VastiID)).ToList().FirstOrDefault().NagarID;
-                    var nagarList = MasterRepository.GetListNagar();
-                    var nagar = nagarList.Where(m => m.NagarID == Convert.ToInt32(nagarid)).ToList().FirstOrDefault().Nagar;
-                    var BhagID = nagarList.Where(m => m.NagarID == Convert.ToInt32(nagarid)).ToList().FirstOrDefault().BhagID;
-                    var bhag = MasterRepository.GetListBhag().Where(m => m.BhagID == Convert.ToInt32(BhagID)).ToList().FirstOrDefault().Bhag;
-                    Vasti = MasterRepository.GetListvastiByNagar(nagarid.ToString());
-
-                    if (Vasti.Count > 0)
-                    {
-                        foreach (var vid in Vasti)
-                        {
-                            if (vastiids == "")
-                            {
-                                vastiids = vid.VastiID.ToString();
-                            }
-                            else
-                            {
-                                vastiids += "," + vid.VastiID.ToString();
-                            }
-
-                        }
-
-                        ShakhaList = MasterRepository.GetListShakhaByVasti(vastiids);
-                    }
-
-                    if (ShakhaList != null)
-                    {
-
-                        return Json(new { Nagar = nagar, Bhag = bhag, NagarID = nagarid, ShakhaList = ShakhaList }, JsonRequestBehavior.AllowGet);
-                    }
-                    else
-                    {
-                        return Json(new { Nagar = nagar, Bhag = bhag, NagarID = nagarid, ShakhaList = "" }, JsonRequestBehavior.AllowGet);
-                    }
-                }
-
-
-            }
-            else
-            {
-                return RedirectToAction("LogOff", "Account");
-            }
-            return View();
-        }
-        public ActionResult MFill_SearchSevaVastiControl(string BhagID)
-        {
-            if (Session["UID"] != null)
-            {
-                var nagarids = String.Empty;
-                var vastiids = string.Empty;
-                var Vasti = new List<_Vasti>();
-                var nagar = new List<_Nagar>();
-                var SevaVasti = new List<_Sevavasti>();
-                var nagarList = MasterRepository.GetListNagar();
-
-                //var ShakhaList = MasterRepository.GetListShakhaByNagar("1,2,3,4");
-                nagar = nagarList.Where(m => m.BhagID == Convert.ToInt32(BhagID)).ToList();
-
-
-                if (nagar.Count > 0)
-                {
-                    foreach (var nid in nagar)
-                    {
-                        if (nagarids == "")
-                        {
-                            nagarids = nid.NagarID.ToString();
-                        }
-                        else
-                        {
-                            nagarids += "," + nid.NagarID.ToString();
-                        }
-
-
-                    }
-                    Vasti = MasterRepository.GetListvastiByNagar(nagarids);
-
-                    if (Vasti.Count > 0)
-                    {
-                        foreach (var vid in Vasti)
-                        {
-                            if (vastiids == "")
-                            {
-                                vastiids = vid.VastiID.ToString();
-                            }
-                            else
-                            {
-                                vastiids += "," + vid.VastiID.ToString();
-                            }
-
-                        }
-                        SevaVasti = MasterRepository.GetListSevavastiByVasti(vastiids);
-                    }
-                    return Json(new { Nagar = nagar, Vasti = Vasti, SevaVasti = SevaVasti }, JsonRequestBehavior.AllowGet);
-                }
-
-                else
-                {
-                    return Json("0", JsonRequestBehavior.AllowGet);
-                }
-            }
-            else
-            {
-                return RedirectToAction("LogOff", "Account");
-            }
-
-        }
-        public ActionResult MInsertSevaVasti(Result model)
-        {
-            // var model = new Result();
-            if (Session["UID"] != null)
-            {
-                model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
-                var result = false;
-                if (model.SVID.ToString() != "0")
-                {
-                    result = MasterRepository.UpdateSevavasti(model);
-
-                }
-                else
-                {
-                    result = MasterRepository.InsertSevaVasti(model);
-                }
-
-
-                model.p = model.p == 0 ? 1 : model.p;
-                var Total = 0;
-                var WhereClause = " where 1=1 ";
-                if (model.UserDetail.Roleid.ToString().Trim() == "2")
-                {
-
-                    WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-
-
-                }
-                else if (model.UserDetail.Roleid.ToString().Trim() == "3")
-                {
-                    WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-
-                }
-                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause, model.p, model.size, out Total);
-                model.Total = Total;
-                var pager = new Pager(model.Total, model.p);
-                model.pager = pager;
-                if (model.ViewSevaVasti.Count > 0)
-                {
-                    return PartialView("~/Views/Shared/Partial/_ViewSevaVasti.cshtml", model);
-                }
-                else
-                {
-                    return Json("0", JsonRequestBehavior.AllowGet);
-                }
-
-
-            }
-            else
-            {
-                return Json("-1", JsonRequestBehavior.AllowGet);
-            }
-
-        }
-        public ActionResult MDeleteSevavasti(string SVID)
-        {
-            var model = new Result();
-            if (Session["UID"] != null)
-            {
-                model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
-                var result = false;
-                if (SVID.ToString() != "0")
-                {
-                    result = MasterRepository.DeleteSevaVasti(Convert.ToInt32(SVID));
-
-                }
-                model.p = model.p == 0 ? 1 : model.p;
-                var Total = 0;
-                var WhereClause = " where 1=1 ";
-                if (model.UserDetail.Roleid.ToString().Trim() == "2")
-                {
-
-                    WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-
-
-                }
-                else if (model.UserDetail.Roleid.ToString().Trim() == "3")
-                {
-                    WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-
-                }
-                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause, model.p, model.size, out Total);
-                model.Total = Total;
-                var pager = new Pager(model.Total, model.p);
-                model.pager = pager;
-                if (model.ViewSevaVasti.Count > 0)
-                {
-                    return PartialView("~/Views/Shared/Partial/_ViewSevaVasti.cshtml", model);
-                }
-                else
-                {
-                    return Json("0", JsonRequestBehavior.AllowGet);
-                }
-
-
-            }
-            else
-            {
-                return Json("-1", JsonRequestBehavior.AllowGet);
-            }
-
+            string constr = string.Format(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=""Excel 12.0 Xml;HDR=YES;""", filepath);
+            Econ = new OleDbConnection(constr);
         }
 
-        public ActionResult MSearchSevavasti(Result model)
+        private void InsertExceldata(string fileepath, string filename)
         {
+            string fullpath = Server.MapPath("/ExcelData/") + filename;
+            ExcelConn(fullpath);
+            string query = string.Format("Select * from [{0}]", "Sheet1$");
+            OleDbCommand Ecom = new OleDbCommand(query, Econ);
+            Econ.Open();
 
-            if (Session["UID"] != null)
-            {
-                var WhereClause = " where 1=1 ";
-                model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
-                if (model.UserDetail.Roleid.ToString().Trim() == "2")
-                {
+            DataSet ds = new DataSet();
+            OleDbDataAdapter oda = new OleDbDataAdapter(query, Econ);
+            Econ.Close();
+            oda.Fill(ds);
 
-                    WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
+            DataTable dt = ds.Tables[0];
 
-
-                }
-                else if (model.UserDetail.Roleid.ToString().Trim() == "3")
-                {
-                    WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-
-                }
-                if (model.SearchNagarID.ToString() != "0")
-                {
-                    WhereClause += " and Nagar.NagarID=" + model.SearchNagarID;
-                }
-                if (model.SearchBhagID.ToString() != "0")
-                {
-                    WhereClause += " and Bhag.BhagID=" + model.SearchBhagID;
-                }
-                if (model.SearchVastiID.ToString() != "0")
-                {
-                    WhereClause += " and Vasti.VastiID=" + model.SearchVastiID;
-                }
-                if (model.SearchSVID.ToString() != "0")
-                {
-                    WhereClause += " and Sevavasti.SVID=" + model.SearchSVID;
-                }
-
-                if (model.SearchSevakary.ToString() == "Yes")
-                {
-                    WhereClause += " and Sevavasti.SKID!=0 ";
-                }
-                if (model.SearchShakha.ToString() == "Yes")
-                {
-                    WhereClause += " and Sevavasti.ShakhaID!=0 ";
-                }
-                model.p = model.p == 0 ? 1 : model.p;
-                var Total = 0;
-                model.ViewSevaVasti = MasterRepository.SearchSevaVasti(WhereClause, model.p, model.size, out Total);
-                model.Total = Total;
-                var pager = new Pager(model.Total, model.p);
-                model.pager = pager;
-                //if (model.ViewShakha != null)
-                //{
-                //    if (model.ViewShakha.Count > 0)
-                //    {
-                return PartialView("~/Views/Shared/Partial/_ViewSevaVasti.cshtml", model);
-                //}
-                //else
-                //{
-                //    return Json("0", JsonRequestBehavior.AllowGet);
-                //}
-                //}
-                //else
-                //{
-                //    return Json("-1", JsonRequestBehavior.AllowGet);
-                //}
-
-
-            }
-            else
-            {
-                return Json("-1", JsonRequestBehavior.AllowGet);
-            }
-
+            SqlBulkCopy objbulk = new SqlBulkCopy(DB);
+            objbulk.DestinationTableName = "Yadi";
+            objbulk.ColumnMappings.Add("Name", "Name");
+            objbulk.ColumnMappings.Add("FatherName", "FatherName");
+            objbulk.ColumnMappings.Add("Surname", "Surname");
+            objbulk.ColumnMappings.Add("BhagID", "BhagID");
+            objbulk.ColumnMappings.Add("NagarID", "NagarID");
+            objbulk.ColumnMappings.Add("Mobile", "Mobile");
+            objbulk.ColumnMappings.Add("Mail", "Mail");
+            objbulk.ColumnMappings.Add("Dob", "Dob");
+            objbulk.ColumnMappings.Add("Blood", "Blood");
+            objbulk.ColumnMappings.Add("NvastiID", "NvastiID");
+            objbulk.ColumnMappings.Add("MilanType", "MilanType");
+            objbulk.ColumnMappings.Add("ShakhaName", "ShakhaName");
+            objbulk.ColumnMappings.Add("JobType", "JobType");
+            objbulk.ColumnMappings.Add("Business", "Business");
+            objbulk.ColumnMappings.Add("Study", "Study");
+            objbulk.ColumnMappings.Add("PresentD", "DSelect");
+            objbulk.ColumnMappings.Add("Obligation", "Obligation");
+            objbulk.ColumnMappings.Add("Padadhikari", "Padadhikari");
+            objbulk.ColumnMappings.Add("Uniform", "Uniform");
+            objbulk.ColumnMappings.Add("Instrument", "Instrument");
+            objbulk.ColumnMappings.Add("Aptitude", "Aptitude");
+            objbulk.ColumnMappings.Add("SelectOrganization", "SelectOrganization");
+            DB.Open();
+            objbulk.WriteToServer(dt);
+            DB.Close();
         }
+
         #endregion
 
         #region VrutNagar
