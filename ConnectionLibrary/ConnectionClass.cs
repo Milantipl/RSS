@@ -277,6 +277,7 @@ namespace ConnectionLibrary
                 {
                     Connection.Open();
                 }
+               
                 using (SqlCommand cmd = new SqlCommand(strQuery, Connection))
                 {
                     cmd.ExecuteNonQuery();

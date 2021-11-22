@@ -42,13 +42,13 @@ namespace RSS.Controllers
                 }
                 model.DashboardCountList = MasterRepository.GetDashbordCount(parameters);
                 model.DashboardBandShakhaList = MasterRepository.GetDashbordBandhShkha(parameters);
-               // model.DashboardNivasiKaryakartaList = MasterRepository.GetDashbordNivasiKaryakarta(parameters);
+                // model.DashboardNivasiKaryakartaList = MasterRepository.GetDashbordNivasiKaryakarta(parameters);
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
                     model.DashboardCountList = model.DashboardCountList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
                     model.DashboardBandShakhaList = model.DashboardBandShakhaList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
-                   // model.DashboardNivasiKaryakartaList = model.DashboardNivasiKaryakartaList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
-                   
+                    // model.DashboardNivasiKaryakartaList = model.DashboardNivasiKaryakartaList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
+
 
                 }
                 else if (model.UserDetail.Roleid.ToString().Trim() == "3")
@@ -71,7 +71,7 @@ namespace RSS.Controllers
             if (Session["UID"] != null)
             {
                 model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
-               
+
                 var parameters = new List<Tuple<string, string, SqlDbType, int?>>();
                 parameters.Clear();
 
@@ -82,7 +82,7 @@ namespace RSS.Controllers
                 }
                 model.DashboardCountList = MasterRepository.GetDashbordCount(parameters);
                 model.DashboardBandShakhaList = MasterRepository.GetDashbordBandhShkha(parameters);
-               // model.DashboardNivasiKaryakartaList = MasterRepository.GetDashbordNivasiKaryakarta(parameters);
+                // model.DashboardNivasiKaryakartaList = MasterRepository.GetDashbordNivasiKaryakarta(parameters);
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
                     model.DashboardCountList = model.DashboardCountList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
@@ -95,14 +95,14 @@ namespace RSS.Controllers
                 {
                     model.DashboardCountList = model.DashboardCountList.Where(x => x.BhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
                     model.DashboardBandShakhaList = model.DashboardBandShakhaList.Where(x => x.BhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
-                 //   model.DashboardNivasiKaryakartaList = model.DashboardNivasiKaryakartaList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
+                    //   model.DashboardNivasiKaryakartaList = model.DashboardNivasiKaryakartaList.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
 
                 }
                 //return PartialView("~/Views/Shared/Partial/Reports/_DashboardCount.cshtml", model);
                 model.DashboardCountString = ConvertViewToString("~/Views/Shared/Partial/_DashboardCount.cshtml", model);
                 model.DashboardBandhShakhaString = ConvertViewToString("~/Views/Shared/Partial/_DashboardBandhshakha.cshtml", model);
-              //  model.DashboardNivasiKaryakartaString = ConvertViewToString("~/Views/Shared/Partial/_DashboardKaryaVihinVasti.cshtml", model);
-                return Json(new { DashboardCountString = model.DashboardCountString, DashboardBandhShakhaString = model.DashboardBandhShakhaString, DashboardNivasiKaryakartaString=model.DashboardNivasiKaryakartaString }, JsonRequestBehavior.AllowGet);
+                //  model.DashboardNivasiKaryakartaString = ConvertViewToString("~/Views/Shared/Partial/_DashboardKaryaVihinVasti.cshtml", model);
+                return Json(new { DashboardCountString = model.DashboardCountString, DashboardBandhShakhaString = model.DashboardBandhShakhaString, DashboardNivasiKaryakartaString = model.DashboardNivasiKaryakartaString }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -186,7 +186,7 @@ namespace RSS.Controllers
             {
                 model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
                 model.ListBhag = MasterRepository.GetListBhag();
-              
+
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
                     model.ListBhag = model.ListBhag.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
@@ -548,17 +548,17 @@ namespace RSS.Controllers
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
                     WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-                                    
+
                 }
                 else if (model.UserDetail.Roleid.ToString().Trim() == "3")
                 {
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-                   
+
                 }
                 model.p = model.p == 0 ? 1 : model.p;
                 var Total = 0;
-                model.ViewShakha = MasterRepository.ViewShakha( WhereClause,model.p, model.size, out Total);
-                
+                model.ViewShakha = MasterRepository.ViewShakha(WhereClause, model.p, model.size, out Total);
+
                 model.Total = Total;
                 var pager = new Pager(model.Total, model.p);
                 model.pager = pager;
@@ -644,7 +644,7 @@ namespace RSS.Controllers
         public JsonResult GetVastiDrpList(string term)
         {
             var model = new Result();
-            var VastiList=MasterRepository.GetListVasti_Nagar();
+            var VastiList = MasterRepository.GetListVasti_Nagar();
             model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
             if (model.UserDetail.Roleid.ToString().Trim() == "2")
             {
@@ -760,17 +760,17 @@ namespace RSS.Controllers
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
                     WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-                    
+
 
                 }
                 else if (model.UserDetail.Roleid.ToString().Trim() == "3")
                 {
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-                   
+
                 }
-               
+
                 model.ViewShakha = MasterRepository.ViewShakha(WhereClause, model.p, model.size, out Total);
-                
+
                 model.Total = Total;
                 var pager = new Pager(model.Total, model.p);
                 model.pager = pager;
@@ -809,13 +809,13 @@ namespace RSS.Controllers
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
                     WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-                   
+
 
                 }
                 else if (model.UserDetail.Roleid.ToString().Trim() == "3")
                 {
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-                   
+
                 }
 
                 model.ViewShakha = MasterRepository.ViewShakha(WhereClause, model.p, model.size, out Total);
@@ -851,13 +851,13 @@ namespace RSS.Controllers
                 {
 
                     WhereClause += " and Bhag.VibhagID=" + model.UserDetail.RoleWiseDept;
-                    
+
 
                 }
                 else if (model.UserDetail.Roleid.ToString().Trim() == "3")
                 {
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
-                   
+
                 }
                 if (model.SearchNagarID.ToString() != "0")
                 {
@@ -1150,7 +1150,7 @@ namespace RSS.Controllers
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
 
                 }
-                model.ViewMilan = MasterRepository.ViewMilan(WhereClause,model.p, model.size, out Total);
+                model.ViewMilan = MasterRepository.ViewMilan(WhereClause, model.p, model.size, out Total);
                 model.Total = Total;
                 var pager = new Pager(model.Total, model.p);
                 model.pager = pager;
@@ -1199,7 +1199,7 @@ namespace RSS.Controllers
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
 
                 }
-                model.ViewMilan = MasterRepository.ViewMilan(WhereClause,model.p, model.size, out Total);
+                model.ViewMilan = MasterRepository.ViewMilan(WhereClause, model.p, model.size, out Total);
                 model.Total = Total;
                 var pager = new Pager(model.Total, model.p);
                 model.pager = pager;
@@ -1227,7 +1227,7 @@ namespace RSS.Controllers
             if (Session["UID"] != null)
             {
                 var WhereClause = " where 1=1 ";
-               
+
                 model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
                 if (model.UserDetail.Roleid.ToString().Trim() == "2")
                 {
@@ -1370,7 +1370,7 @@ namespace RSS.Controllers
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
 
                 }
-                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause,model.p, model.size, out Total);
+                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause, model.p, model.size, out Total);
                 model.Total = Total;
                 var pager = new Pager(model.Total, model.p);
                 model.pager = pager;
@@ -1530,7 +1530,7 @@ namespace RSS.Controllers
                     WhereClause += " and Bhag.BhagID=" + model.UserDetail.RoleWiseDept;
 
                 }
-                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause,model.p, model.size, out Total);
+                model.ViewSevaVasti = MasterRepository.ViewSevaVasti(WhereClause, model.p, model.size, out Total);
                 model.Total = Total;
                 var pager = new Pager(model.Total, model.p);
                 model.pager = pager;
@@ -1684,20 +1684,14 @@ namespace RSS.Controllers
         OleDbConnection Econ;
         public ActionResult MSevavasti(HttpPostedFileBase file)
         {
+
             var model = new Result();
             if (Session["UID"] != null)
             {
                 model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
                 model.ListBhag = MasterRepository.GetListBhag();
-                if (model.UserDetail.Roleid.ToString().Trim() == "2")
-                {
-                    model.ListBhag = model.ListBhag.Where(x => x.VibhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
+                model.ListYadis = MasterRepositoryNew.GetListYadi();
 
-                }
-                else if (model.UserDetail.Roleid.ToString().Trim() == "3")
-                {
-                    model.ListBhag = model.ListBhag.Where(x => x.BhagID.ToString() == model.UserDetail.RoleWiseDept.ToString().Trim()).ToList();
-                }
                 if (file != null)
                 {
                     string filename = Guid.NewGuid() + Path.GetExtension(file.FileName);
@@ -1725,6 +1719,10 @@ namespace RSS.Controllers
 
         private void InsertExceldata(string fileepath, string filename)
         {
+
+
+            int insertedRecordCount = 0, NotInsertedCount = 0;
+
             string fullpath = Server.MapPath("/ExcelData/") + filename;
             ExcelConn(fullpath);
             string query = string.Format("Select * from [{0}]", "Sheet1$");
@@ -1737,7 +1735,6 @@ namespace RSS.Controllers
             oda.Fill(ds);
 
             DataTable dt = ds.Tables[0];
-
             SqlBulkCopy objbulk = new SqlBulkCopy(DB);
             objbulk.DestinationTableName = "Yadi";
             objbulk.ColumnMappings.Add("Name", "Name");
@@ -1755,16 +1752,147 @@ namespace RSS.Controllers
             objbulk.ColumnMappings.Add("JobType", "JobType");
             objbulk.ColumnMappings.Add("Business", "Business");
             objbulk.ColumnMappings.Add("Study", "Study");
-            objbulk.ColumnMappings.Add("PresentD", "DSelect");
-            objbulk.ColumnMappings.Add("Obligation", "Obligation");
+            objbulk.ColumnMappings.Add("SanghSikshan", "SanghSikshan");
+            objbulk.ColumnMappings.Add("PresentD", "PresentD");
+            objbulk.ColumnMappings.Add("DSelect", "DSelect");
+            objbulk.ColumnMappings.Add("Gatividhi", "Gatividhi");
             objbulk.ColumnMappings.Add("Padadhikari", "Padadhikari");
             objbulk.ColumnMappings.Add("Uniform", "Uniform");
-            objbulk.ColumnMappings.Add("Instrument", "Instrument");
-            objbulk.ColumnMappings.Add("Aptitude", "Aptitude");
+            objbulk.ColumnMappings.Add("Vadhya", "Vadhya");
+            objbulk.ColumnMappings.Add("SanghPravesh", "SanghPravesh");
+            objbulk.ColumnMappings.Add("Abhiruchi", "Abhiruchi");
             objbulk.ColumnMappings.Add("SelectOrganization", "SelectOrganization");
+
+            DataTable dtNotMatchRecord = new DataTable();
+            DataRow _tempDatarow = dtNotMatchRecord.NewRow();
+
+
+            string sqlquery = "SELECT * FROM YadiWrong";
+
+            _Yadi model = new _Yadi();
+
+        //    dtNotMatchRecord = dt;
+            String _bhagID, _WrongbhagID, _bhagIDWrong, _NagarID, _VastiID, _ShakhaID, _MilanType = "0";
+            int i = 1;
+            if (dt.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dt.Rows) // search whole table
+                {
+                    _bhagID = MasterRepositoryNew.GetBhagIdByName(dr["BhagID"].ToString()).ToString();
+                    if (_bhagID == "0")
+
+                    {
+                        //  _tempDatarow = dr;
+
+                        //using (SqlCommand cmd = new SqlCommand(sqlquery))
+                        //{
+                        //    cmd.Connection = DB;
+                        //    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+                        //    {
+                        //        dtNotMatchRecord.Rows.Add(dr);
+                        //    }
+                        //}
+
+
+                        DB.Open();
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.Connection = DB;
+                        cmd.CommandText = ;
+                        cmd.ExecuteNonQuery();
+                        DB.Close();
+
+                        // dtNotMatchRecord.ImportRow(_tempDatarow);
+
+                        //   _tempDatarow.ItemArray = dr.ItemArray;
+                        //  dtNotMatchRecord.Rows.Add(dr);
+                        //model =;
+                        dr.Delete();
+                        goto start;
+                    }
+
+                    else
+                    {
+                        dr["BhagID"] = _bhagID;
+                        // dtNotMatchRecord.Rows[i].Delete();
+                        //  ConnectionLibrary.Model._Yadi = dr;
+
+                    }
+
+                    _NagarID = MasterRepositoryNew.GetNagarByName(dr["NagarID"].ToString()).ToString();
+                    if (_NagarID == "0")
+                    {
+
+                        dr.Delete();
+
+                        goto start;
+                    }
+                    else
+                    {
+                        dr["NagarID"] = _NagarID;
+
+                    }
+
+                    _VastiID = MasterRepositoryNew.GetNivasivastiByName(dr["NvastiID"].ToString()).ToString();
+                    if (_VastiID == "0")
+                    {
+
+                        dr.Delete();
+                        goto start;
+                    }
+                    else
+                    {
+
+                        dr["NvastiID"] = _VastiID;
+
+                    }
+
+
+                    _ShakhaID = MasterRepositoryNew.GetShakhaByName(dr["ShakhaName"].ToString()).ToString();
+                    if (_ShakhaID == "0")
+                    {
+
+
+                        dr.Delete();
+                        goto start;
+                    }
+                    else
+                    {
+                        dr["ShakhaName"] = _ShakhaID;
+
+                    }
+
+
+                    _MilanType = MasterRepositoryNew.GetMTypeByName(dr["MilanType"].ToString()).ToString();
+                    if (_MilanType == "0")
+                    {
+
+                        dr.Delete();
+                        goto start;
+                    }
+                    else
+                    {
+                        dr["MilanType"] = _MilanType;
+
+                    }
+
+                start:
+                    string s = "";
+                    i++;
+                }
+                dt.AcceptChanges();
+                dtNotMatchRecord.AcceptChanges();
+            }
+
+
             DB.Open();
             objbulk.WriteToServer(dt);
             DB.Close();
+
+            //  DB.Open();
+            //_objbulk.WriteToServer(dtNotMatchRecord);
+            //  DB.Close();
+
+
         }
 
         #endregion
@@ -1806,19 +1934,19 @@ namespace RSS.Controllers
         public ActionResult VrutNagar()
         {
             Result model = new Result();
-             if (Session["UID"] != null)
+            if (Session["UID"] != null)
             {
-            model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
-            model.ListMonth = MasterRepository.GetListMonth();
-            var firstitemmonth = new _Month();
-            firstitemmonth.MonthID = 0;
-            firstitemmonth.Month = "--Select Month---";
-            model.ListMonth.Insert(0, firstitemmonth);
+                model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
+                model.ListMonth = MasterRepository.GetListMonth();
+                var firstitemmonth = new _Month();
+                firstitemmonth.MonthID = 0;
+                firstitemmonth.Month = "--Select Month---";
+                model.ListMonth.Insert(0, firstitemmonth);
             }
-             else
-             {
-                 return RedirectToAction("LogOff", "Account");
-             }
+            else
+            {
+                return RedirectToAction("LogOff", "Account");
+            }
             //model.ViewMilanUPVrut = MasterRepository.GetViewMilan_NagarVrut();
             // model.ViewShakhaUPVrut = MasterRepository.GetViewShakha_NagarVrut();
             // model.ViewNagarVrut = MasterRepository.GetViewNagarVrut();

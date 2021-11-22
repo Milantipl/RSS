@@ -17,8 +17,6 @@ namespace ConnectionLibrary.Model
         public List<_Bhag> ListBhag { get; set; }
         public List<_Nagar> ListNagar { get; set; }
         public List<_Vasti> ListVasti { get; set; }
-
-
         public List<_Vasti> ListSearchVasti { get; set; }
         public List<_Nagar> ListSearchNagar { get; set; }
         public List<_Month> ListMonth { get; set; }
@@ -29,8 +27,9 @@ namespace ConnectionLibrary.Model
         public List<_Milan> ListMilan { get; set; }
         public List<_Shakhatime_Mast> ListShakhaTime { get; set; }
         public List<_Star_Mast> ListStar { get; set; }
-        public List<_Dayitva_Mast> ListDayitva { get; set; }
-      
+        public List<_Dayitva_Mast> ListDayitva { get; set; }  
+        public List<_Yadi> ListYadis { get; set; }
+          
         public int VibhagID { get; set; }
         public int BhagID { get; set; }
         public int NagarID { get; set; }
