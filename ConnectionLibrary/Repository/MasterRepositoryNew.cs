@@ -183,5 +183,29 @@ namespace ConnectionLibrary.Repository
             }
 
         }
+
+        public static List<_WrongYadi> GetListWrongYadi()
+        {
+            var result = new List<_WrongYadi>();
+            try
+            {
+                var cn = new ConnectionClass();
+                var Result = cn.Select("Select Name,FatherName,Surname from YadiWrong order by YadiID ");
+                if (Result.Rows.Count > 0)
+                {
+                    result = Result.ToListof<_WrongYadi>();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception Ex)
+            {
+                return null;
+            }
+        }
     }
 }

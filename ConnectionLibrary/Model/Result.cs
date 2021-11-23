@@ -29,7 +29,9 @@ namespace ConnectionLibrary.Model
         public List<_Star_Mast> ListStar { get; set; }
         public List<_Dayitva_Mast> ListDayitva { get; set; }  
         public List<_Yadi> ListYadis { get; set; }
-          
+
+        public List<_WrongYadi> WrongYadis { get; set; }
+
         public int VibhagID { get; set; }
         public int BhagID { get; set; }
         public int NagarID { get; set; }

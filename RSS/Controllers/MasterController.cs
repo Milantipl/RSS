@@ -8,6 +8,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -1764,14 +1765,16 @@ namespace RSS.Controllers
             objbulk.ColumnMappings.Add("SelectOrganization", "SelectOrganization");
 
             DataTable dtNotMatchRecord = new DataTable();
-            DataRow _tempDatarow = dtNotMatchRecord.NewRow();
+            DataRow rr = dtNotMatchRecord.NewRow();
 
-
-            string sqlquery = "SELECT * FROM YadiWrong";
+            StringBuilder sb = new StringBuilder();
+            var context = new _WrongYadi();
 
             _Yadi model = new _Yadi();
 
-        //    dtNotMatchRecord = dt;
+            _WrongYadi _Wrong = new _WrongYadi();
+
+            //    dtNotMatchRecord = dt;
             String _bhagID, _WrongbhagID, _bhagIDWrong, _NagarID, _VastiID, _ShakhaID, _MilanType = "0";
             int i = 1;
             if (dt.Rows.Count > 0)
@@ -1779,33 +1782,48 @@ namespace RSS.Controllers
                 foreach (DataRow dr in dt.Rows) // search whole table
                 {
                     _bhagID = MasterRepositoryNew.GetBhagIdByName(dr["BhagID"].ToString()).ToString();
-                    if (_bhagID == "0")
+                    if (_bhagID == "0")  
 
                     {
-                        //  _tempDatarow = dr;
 
-                        //using (SqlCommand cmd = new SqlCommand(sqlquery))
-                        //{
-                        //    cmd.Connection = DB;
-                        //    using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
-                        //    {
-                        //        dtNotMatchRecord.Rows.Add(dr);
-                        //    }
-                        //}
-
-
+                        var datar = dr.ItemArray;
                         DB.Open();
-                        SqlCommand cmd = new SqlCommand();
-                        cmd.Connection = DB;
-                        cmd.CommandText = ;
-                        cmd.ExecuteNonQuery();
+                        string wquery = "INSERT INTO YadiWrong ([Name],[FatherName],[Surname],[BhagID],[NagarID],[Mobile],[Mail],[Dob],[Blood],[NvastiID],[MilanType],[ShakhaName],[JobType],[Business],[Study],[SanghSikshan],[PresentD],[DSelect],[Gatividhi],[Padadhikari],[Uniform],[Vadhya],[SanghPravesh],[Abhiruchi],[SelectOrganization]) VALUES (@Name,@FatherName,@Surname,@BhagID,@NagarID,@Mobile,@Mail,@Dob,@Blood,@NvastiID,@MilanType,@ShakhaName,@JobType,@Business,@Study,@SanghSikshan,@PresentD,@DSelect,@Gatividhi,@Padadhikari,@Uniform,@Vadhya,@SanghPravesh,@Abhiruchi,@SelectOrganization)";
+                        SqlCommand sqcmd = new SqlCommand(wquery, DB);
+
+                        //context.Name = (string)datar[0];
+
+                        sqcmd.Parameters.AddWithValue("@Name", (string)datar[0]);
+                        sqcmd.Parameters.AddWithValue("@FatherName", (string)datar[1]);
+                        sqcmd.Parameters.AddWithValue("@Surname", (string)datar[2]);
+                        sqcmd.Parameters.AddWithValue("@BhagID", (string)datar[3]);
+                        sqcmd.Parameters.AddWithValue("@NagarID", (string)datar[4]);
+                        sqcmd.Parameters.AddWithValue("@Mobile", datar[5]);
+                        sqcmd.Parameters.AddWithValue("@Mail", (string)datar[6]);
+                        sqcmd.Parameters.AddWithValue("@Dob", datar[7]);
+                        sqcmd.Parameters.AddWithValue("@Blood", (string)datar[8]);
+                        sqcmd.Parameters.AddWithValue("@NvastiID", (string)datar[9]);
+                        sqcmd.Parameters.AddWithValue("@MilanType", (string)datar[10]);
+                        sqcmd.Parameters.AddWithValue("@ShakhaName", (string)datar[11]);
+                        sqcmd.Parameters.AddWithValue("@JobType", (string)datar[12]);
+                        sqcmd.Parameters.AddWithValue("@Business", (string)datar[13]);
+                        sqcmd.Parameters.AddWithValue("@Study", (string)datar[14]);
+                        sqcmd.Parameters.AddWithValue("@SanghSikshan", (string)datar[15]);
+                        sqcmd.Parameters.AddWithValue("@PresentD", (string)datar[16]);
+                        sqcmd.Parameters.AddWithValue("@DSelect", (string)datar[17]);
+                        sqcmd.Parameters.AddWithValue("@Gatividhi", (string)datar[18]);
+                        sqcmd.Parameters.AddWithValue("@Padadhikari", (string)datar[19]);
+                        sqcmd.Parameters.AddWithValue("@Uniform", (string)datar[20]);
+                        sqcmd.Parameters.AddWithValue("@Vadhya", (string)datar[21]);
+                        sqcmd.Parameters.AddWithValue("@SanghPravesh", datar[22]);
+                        sqcmd.Parameters.AddWithValue("@Abhiruchi", (string)datar[23]);
+                        sqcmd.Parameters.AddWithValue("@SelectOrganization", (string)datar[24]);
+                        sqcmd.ExecuteNonQuery();
+
+                        // cmd = new SqlCommand("insert into YadiWrong (Name,FatherName,Surname,BhagID,NagarID,Mobile,Mail,Dob,Blood,NvastiID,MilanType,ShakhaName,JobType,Business,Study,SanghSikshan,PresentD,DSelect,Gatividhi,Padadhikari,Uniform,Vadhya,SanghPravesh,Abhiruchi,SelectOrganization) VALUES ('" + Rus + "')");
+                        //  cmd.ExecuteNonQuery();
                         DB.Close();
 
-                        // dtNotMatchRecord.ImportRow(_tempDatarow);
-
-                        //   _tempDatarow.ItemArray = dr.ItemArray;
-                        //  dtNotMatchRecord.Rows.Add(dr);
-                        //model =;
                         dr.Delete();
                         goto start;
                     }

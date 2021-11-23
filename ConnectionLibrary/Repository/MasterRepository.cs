@@ -78,6 +78,8 @@ namespace ConnectionLibrary.Repository
                 return null;
             }
         }
+
+        
         public static List<_Nagar> GetListNagar()
         {
             var result = new List<_Nagar>();
