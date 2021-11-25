@@ -86,6 +86,7 @@
     <Compile Include="Model\_Star_Mast.cs" />
     <Compile Include="Model\_Vasti.cs" />
     <Compile Include="Model\_Vibhag.cs" />
+    <Compile Include="Model\_WrongYadiExcel.cs" />
     <Compile Include="Model\_WrongYadi.cs" />
     <Compile Include="Model\_Yadi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

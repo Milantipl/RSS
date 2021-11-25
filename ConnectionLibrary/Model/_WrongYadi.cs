@@ -8,8 +8,7 @@ namespace ConnectionLibrary.Model
 {
     public class _WrongYadi
     {
-        
-
+      
         public int YadiID { get; set; }
         public string Name { get; set; }
         public string FatherName { get; set; }

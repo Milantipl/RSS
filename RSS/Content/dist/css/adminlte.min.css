@@ -53985,9 +53985,9 @@ a.text-muted:hover {
 }
 
 /* PAGINATION */
-.pagination {
+/*.pagination {
     display: inline-block;
-}
+}*/
 
     .pagination a {
         color: black;

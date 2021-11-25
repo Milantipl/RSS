@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link href="~/Content/dist/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/responsive.bootstrap4.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="~/Content/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <link href="~/Content/dist/css/toastr.min.css" rel="stylesheet" />
-      <link href="~/Content/dist/css/yjaeB.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/yjaeB.css" rel="stylesheet" />
     <link href="~/Content/dist/css/select2.css" rel="stylesheet" />
 </head>
 
@@ -49,11 +52,10 @@
         @RenderBody()
         <footer class="main-footer text-center">
             <strong>Copyright &copy; 2021. RSS.</strong> All rights reserved.
-       
+
         </footer>
     </div>
     <!-- ./wrapper -->
-
     <!-- jQuery -->
     <script src="~/Content/plugins/jquery/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
@@ -64,11 +66,28 @@
     </script>
     <script src="~/Content/plugins/jquery/jquery.min.js"></script>
     <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+
+    <script src="~/Content/dist/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/dist/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/dist/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/dist/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/dist/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/dist/js/buttons.bootstrap4.min.js"></script>
+    @*<script src="~/Content/dist/js/jszip.min.js"></script>
+    <script src="~/Content/dist/js/pdfmake.min.js"></script>
+    <script src="~/Content/dist/js/vfs_fonts.js"></script>
+    <script src="~/Content/dist/js/buttons.html5.min.js"></script>
+    <script src="~/Content/dist/js/buttons.colVis.min.js"></script>*@
+
     <script src="~/Content/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <script src="~/Content/dist/js/adminlte.js"></script>
     <script src="~/Content/dist/js/toastr.min.js"></script>
     <script src="~/Content/dist/js/select2.js"></script>
-      <script src="~/Content/dist/js/Chart.js"></script>
+    <script src="~/Content/dist/js/Chart.js"></script>
+
+
 
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
@@ -82,7 +101,7 @@
             }
 
         });
-         </script>
+    </script>
 </body>
 
 </html>

@@ -41,10 +41,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=5.8.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.8.3\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -120,6 +129,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="Content\dist\css\adminlte.min.css" />
+    <Content Include="Content\dist\css\buttons.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\dist\css\responsive.bootstrap4.min.css" />
     <Content Include="Content\dist\css\select2.css" />
     <Content Include="Content\dist\css\toastr.min.css" />
     <Content Include="Content\dist\css\yjaeB.css" />
@@ -132,13 +144,24 @@
     <Content Include="Content\dist\img\icons.png" />
     <Content Include="Content\dist\img\line.jpg" />
     <Content Include="Content\dist\js\adminlte.js" />
+    <Content Include="Content\dist\js\buttons.bootstrap4.min.js" />
+    <Content Include="Content\dist\js\buttons.colVis.min.js" />
+    <Content Include="Content\dist\js\buttons.html5.min.js" />
     <Content Include="Content\dist\js\Chart.js" />
+    <Content Include="Content\dist\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\dist\js\dataTables.buttons.min.js" />
+    <Content Include="Content\dist\js\dataTables.responsive.min.js" />
     <Content Include="Content\dist\js\demo.js" />
+    <Content Include="Content\dist\js\jquery.dataTables.min.js" />
     <Content Include="Content\dist\js\jquery.js" />
+    <Content Include="Content\dist\js\jszip.min.js" />
     <Content Include="Content\dist\js\Main.js" />
+    <Content Include="Content\dist\js\pdfmake.min.js" />
+    <Content Include="Content\dist\js\responsive.bootstrap4.min.js" />
     <Content Include="Content\dist\js\select2.js" />
     <Content Include="Content\dist\js\table2excel.js" />
     <Content Include="Content\dist\js\toastr.min.js" />
+    <Content Include="Content\dist\js\vfs_fonts.js" />
     <Content Include="Content\plugins\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="Content\plugins\bootstrap\js\bootstrap.bundle.min.js" />
     <Content Include="Content\plugins\bootstrap\js\bootstrap.js" />
@@ -315,6 +338,7 @@
     <Content Include="Views\Master\MSevavasti.cshtml" />
     <Content Include="Views\Shared\Partial\_ViewMSevaVasti.cshtml" />
     <Content Include="Views\Shared\Partial\_ViewMsYSevaVasti.cshtml" />
+    <Content Include="Views\Shared\Partial\_ViewWrongSevaVasti.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConnectionLibrary\ConnectionLibrary.csproj">

@@ -28,9 +28,7 @@ namespace ConnectionLibrary.Model
         public List<_Shakhatime_Mast> ListShakhaTime { get; set; }
         public List<_Star_Mast> ListStar { get; set; }
         public List<_Dayitva_Mast> ListDayitva { get; set; }  
-        public List<_Yadi> ListYadis { get; set; }
-
-        public List<_WrongYadi> WrongYadis { get; set; }
+        
 
         public int VibhagID { get; set; }
         public int BhagID { get; set; }
@@ -95,7 +93,11 @@ namespace ConnectionLibrary.Model
         public List<_Login_Mast> ViewUser { get; set; }
         public List<_BethakVasti> ViewBethakvasti { get; set; }
         public List<_Pravasi_Karyakarta> ViewPravasikaryakarta { get; set; }
-       
+
+        public List<_Yadi> ListYadis { get; set; }
+
+        public List<_WrongYadi> WrongYadis { get; set; }
+
         public Pager pager { get; set; }
         public int p { get; set; }
         public int vid { get; set; }

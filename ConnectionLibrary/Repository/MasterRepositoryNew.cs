@@ -184,15 +184,45 @@ namespace ConnectionLibrary.Repository
 
         }
 
+        public static string GetMobile(string mobile)
+        {
+            var result = "0";
+            try
+            {
+                var cn = new ConnectionClass();
+                DataTable dtbhag = cn.Select(@"SELECT Mobile FROM yadi WHERE mobile like '%"+mobile+"%'");
+                if (dtbhag.Rows.Count > 0)
+
+                {
+                    //result = dtbhag.Rows[0]["Mobile"].ToString();
+                    result = "0";
+                    return result;
+                }
+                else
+                {
+                    return result = mobile;
+                }
+            }
+            catch (Exception Ex)
+            {
+                return result.ToString();
+            }
+
+        }
+
+
+
         public static List<_WrongYadi> GetListWrongYadi()
         {
             var result = new List<_WrongYadi>();
             try
             {
                 var cn = new ConnectionClass();
-                var Result = cn.Select("Select Name,FatherName,Surname from YadiWrong order by YadiID ");
+                string query = "Select * From YadiWrong";
+                var Result = cn.Select(query);
                 if (Result.Rows.Count > 0)
                 {
+                    //   result = Result.ToListof<_Yadi>();
                     result = Result.ToListof<_WrongYadi>();
                     return result;
                 }
