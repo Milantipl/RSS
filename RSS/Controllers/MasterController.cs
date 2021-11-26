@@ -1993,7 +1993,7 @@ namespace RSS.Controllers
 
 
                     _MilanType = MasterRepositoryNew.GetMTypeByName(dr["MilanType"].ToString()).ToString();
-                    if (_MilanType == "0")
+                    if (_MilanType == "0" && _MilanType == null)
                     {
 
                         var datar = dr.ItemArray;

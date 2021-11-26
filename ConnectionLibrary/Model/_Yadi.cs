@@ -16,7 +16,7 @@ namespace ConnectionLibrary.Model
         public string NagarID { get; set; }
         public string Mobile { get; set; }
         public string Mail { get; set; }
-        public System.DateTime Dob { get; set; }
+        public string Dob { get; set; }
         public string Blood { get; set; }
         public string NvastiID { get; set; }
         public string MilanType { get; set; }
