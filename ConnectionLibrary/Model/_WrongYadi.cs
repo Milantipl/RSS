@@ -19,8 +19,10 @@ namespace ConnectionLibrary.Model
         public string Mail { get; set; }
         public string Dob { get; set; }
         public string Blood { get; set; }
+        public string VastiName { get; set; }
         public string NvastiID { get; set; }
         public string MilanType { get; set; }
+        public string ShakhaId { get; set; }
         public string ShakhaName { get; set; }
         public string JobType { get; set; }
         public string Business { get; set; }

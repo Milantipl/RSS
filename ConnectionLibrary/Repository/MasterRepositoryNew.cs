@@ -32,7 +32,11 @@ namespace ConnectionLibrary.Repository
             try
             {
                 var cn = new ConnectionClass();
-                string query = "Select YadiID,Name,FatherName,Surname,Bhag.Bhag as BhagID,Nagar.Nagar as NagarID,Mobile,Mail,Dob, Blood, Vasti.Vasti as NvastiID, MilanType.MilanType, Shakha.ShakhaName, JobType, Business, Study, " +
+                string query = "Select YadiID,Name,FatherName,Surname,Bhag.Bhag as BhagID,Nagar.Nagar as NagarID,Mobile,Mail,Dob, Blood, " +
+                    //"VastiName," +
+                    "Vasti.Vasti as NvastiID, MilanType.MilanType," +
+                    //"Yadi.ShakhaID, " +
+                    "Shakha.ShakhaName, JobType, Business, Study, " +
 "SanghSikshan, PresentD, DSelect, Gatividhi, Padadhikari, Uniform, " +
 "Vadhya, SanghPravesh, Abhiruchi, SelectOrganization" +
 " from Yadi inner join Bhag on Yadi.BHagID = Bhag.BHagID" +
@@ -155,7 +159,7 @@ namespace ConnectionLibrary.Repository
             }
             catch (Exception Ex)
             {
-                return result.ToString();
+                return result.ToString(); 
             }
         }
 

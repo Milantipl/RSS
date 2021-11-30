@@ -339,6 +339,7 @@
     <Content Include="Views\Shared\Partial\_ViewMSevaVasti.cshtml" />
     <Content Include="Views\Shared\Partial\_ViewMsYSevaVasti.cshtml" />
     <Content Include="Views\Shared\Partial\_ViewWrongSevaVasti.cshtml" />
+    <Content Include="Views\Master\Createyadi.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConnectionLibrary\ConnectionLibrary.csproj">

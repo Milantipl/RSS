@@ -1,6 +1,5 @@
 ﻿using ConnectionLibrary;
 using ConnectionLibrary.Model;
-using ConnectionLibrary.Model;
 using ConnectionLibrary.Repository;
 using OfficeOpenXml;
 using System;
@@ -575,7 +574,9 @@ namespace RSS.Controllers
         }
         public ActionResult Fill_AddShakhaDetail(string VastiID)
         {
-            if (Session["UID"] != null)
+            if (Session["UID"] != null)  
+
+
             {
                 if (VastiID != null)
                 {
@@ -1688,7 +1689,6 @@ namespace RSS.Controllers
         OleDbConnection Econ;
         public ActionResult MSevavasti(HttpPostedFileBase file, string btn)
         {
-
             var model = new Result();
             if (Session["UID"] != null)
             {
@@ -1715,8 +1715,7 @@ namespace RSS.Controllers
 
                 }
 
-              
-
+     
             }
             else
             {
@@ -1733,10 +1732,6 @@ namespace RSS.Controllers
 
         private void InsertExceldata(string fileepath, string filename)
         {
-
-
-            int insertedRecordCount = 0, NotInsertedCount = 0;
-
             string fullpath = Server.MapPath("/ExcelData/") + filename;
             ExcelConn(fullpath);
             string query = string.Format("Select * from [{0}]", "Sheet1$");
@@ -1760,9 +1755,11 @@ namespace RSS.Controllers
             objbulk.ColumnMappings.Add("Mail", "Mail");
             objbulk.ColumnMappings.Add("Dob", "Dob");
             objbulk.ColumnMappings.Add("Blood", "Blood");
+            //objbulk.ColumnMappings.Add("VastiName", "NvastiID");
             objbulk.ColumnMappings.Add("NvastiID", "NvastiID");
             objbulk.ColumnMappings.Add("MilanType", "MilanType");
             objbulk.ColumnMappings.Add("ShakhaName", "ShakhaName");
+            //objbulk.ColumnMappings.Add("ShakhaId", "ShakhaName");
             objbulk.ColumnMappings.Add("JobType", "JobType");
             objbulk.ColumnMappings.Add("Business", "Business");
             objbulk.ColumnMappings.Add("Study", "Study");
@@ -1788,7 +1785,7 @@ namespace RSS.Controllers
             _WrongYadi _Wrong = new _WrongYadi();
 
             //    dtNotMatchRecord = dt;
-            String _bhagID, _WrongbhagID, _bhagIDWrong, _NagarID, _VastiID, _ShakhaID, _mobile,  _MilanType = "0";
+            String _bhagID, _NagarID, _VastiID, _ShakhaID, _mobile,  _MilanType = "0";
             int i = 1;
             if (dt.Rows.Count > 0)
             {
@@ -1796,7 +1793,6 @@ namespace RSS.Controllers
                 {
                     _bhagID = MasterRepositoryNew.GetBhagIdByName(dr["BhagID"].ToString()).ToString();
                     if (_bhagID == "0")
-
                     {
 
                         var datar = dr.ItemArray;
@@ -1812,8 +1808,10 @@ namespace RSS.Controllers
                         sqcmd.Parameters.AddWithValue("@Mail", datar[6]);
                         sqcmd.Parameters.AddWithValue("@Dob", datar[7]);
                         sqcmd.Parameters.AddWithValue("@Blood", datar[8]);
+                        sqcmd.Parameters.AddWithValue("@VastiName", datar[9]);
                         sqcmd.Parameters.AddWithValue("@NvastiID", datar[9]);
                         sqcmd.Parameters.AddWithValue("@MilanType", datar[10]);
+                        sqcmd.Parameters.AddWithValue("@ShakhaId", datar[11]);
                         sqcmd.Parameters.AddWithValue("@ShakhaName", datar[11]);
                         sqcmd.Parameters.AddWithValue("@JobType", datar[12]);
                         sqcmd.Parameters.AddWithValue("@Business", datar[13]);
@@ -1878,60 +1876,57 @@ namespace RSS.Controllers
 
 
                         dr.Delete();
-
                         goto start;
                     }
                     else
                     {
                         dr["NagarID"] = _NagarID;
-
                     }
 
+                    
                     _VastiID = MasterRepositoryNew.GetNivasivastiByName(dr["NvastiID"].ToString()).ToString();
-                    if (_VastiID == "0")
-                    {
+                    //if (_VastiID == "0")
+                    //{
+                    //    var datar = dr.ItemArray;
+                    //    DB.Open();
+                    //    string wquery = "INSERT INTO YadiWrong ([Name],[FatherName],[Surname],[BhagID],[NagarID],[Mobile],[Mail],[Dob],[Blood],[NvastiID],[MilanType],[ShakhaName],[JobType],[Business],[Study],[SanghSikshan],[PresentD],[DSelect],[Gatividhi],[Padadhikari],[Uniform],[Vadhya],[SanghPravesh],[Abhiruchi],[SelectOrganization]) VALUES (@Name,@FatherName,@Surname,@BhagID,@NagarID,@Mobile,@Mail,@Dob,@Blood,@NvastiID,@MilanType,@ShakhaName,@JobType,@Business,@Study,@SanghSikshan,@PresentD,@DSelect,@Gatividhi,@Padadhikari,@Uniform,@Vadhya,@SanghPravesh,@Abhiruchi,@SelectOrganization)";
+                    //    SqlCommand sqcmd = new SqlCommand(wquery, DB);
+                    //    sqcmd.Parameters.AddWithValue("@Name", datar[0]);
+                    //    sqcmd.Parameters.AddWithValue("@FatherName", datar[1]);
+                    //    sqcmd.Parameters.AddWithValue("@Surname", datar[2]);
+                    //    sqcmd.Parameters.AddWithValue("@BhagID", datar[3]);
+                    //    sqcmd.Parameters.AddWithValue("@NagarID", datar[4]);
+                    //    sqcmd.Parameters.AddWithValue("@Mobile", datar[5]);
+                    //    sqcmd.Parameters.AddWithValue("@Mail", datar[6]);
+                    //    sqcmd.Parameters.AddWithValue("@Dob", datar[7]);
+                    //    sqcmd.Parameters.AddWithValue("@Blood", datar[8]);
+                    //    sqcmd.Parameters.AddWithValue("@NvastiID", datar[9]);
+                    //    sqcmd.Parameters.AddWithValue("@MilanType", datar[10]);
+                    //    sqcmd.Parameters.AddWithValue("@ShakhaName", datar[11]);
+                    //    sqcmd.Parameters.AddWithValue("@JobType", datar[12]);
+                    //    sqcmd.Parameters.AddWithValue("@Business", datar[13]);
+                    //    sqcmd.Parameters.AddWithValue("@Study", datar[14]);
+                    //    sqcmd.Parameters.AddWithValue("@SanghSikshan", datar[15]);
+                    //    sqcmd.Parameters.AddWithValue("@PresentD", datar[16]);
+                    //    sqcmd.Parameters.AddWithValue("@DSelect", datar[17]);
+                    //    sqcmd.Parameters.AddWithValue("@Gatividhi", datar[18]);
+                    //    sqcmd.Parameters.AddWithValue("@Padadhikari", datar[19]);
+                    //    sqcmd.Parameters.AddWithValue("@Uniform", datar[20]);
+                    //    sqcmd.Parameters.AddWithValue("@Vadhya", datar[21]);
+                    //    sqcmd.Parameters.AddWithValue("@SanghPravesh", datar[22]);
+                    //    sqcmd.Parameters.AddWithValue("@Abhiruchi", datar[23]);
+                    //    sqcmd.Parameters.AddWithValue("@SelectOrganization", datar[24]);
+                    //    sqcmd.ExecuteNonQuery().ToString();
+                    //    DB.Close();
 
-                        var datar = dr.ItemArray;
-                        DB.Open();
-                        string wquery = "INSERT INTO YadiWrong ([Name],[FatherName],[Surname],[BhagID],[NagarID],[Mobile],[Mail],[Dob],[Blood],[NvastiID],[MilanType],[ShakhaName],[JobType],[Business],[Study],[SanghSikshan],[PresentD],[DSelect],[Gatividhi],[Padadhikari],[Uniform],[Vadhya],[SanghPravesh],[Abhiruchi],[SelectOrganization]) VALUES (@Name,@FatherName,@Surname,@BhagID,@NagarID,@Mobile,@Mail,@Dob,@Blood,@NvastiID,@MilanType,@ShakhaName,@JobType,@Business,@Study,@SanghSikshan,@PresentD,@DSelect,@Gatividhi,@Padadhikari,@Uniform,@Vadhya,@SanghPravesh,@Abhiruchi,@SelectOrganization)";
-                        SqlCommand sqcmd = new SqlCommand(wquery, DB);
-                        sqcmd.Parameters.AddWithValue("@Name", datar[0]);
-                        sqcmd.Parameters.AddWithValue("@FatherName", datar[1]);
-                        sqcmd.Parameters.AddWithValue("@Surname", datar[2]);
-                        sqcmd.Parameters.AddWithValue("@BhagID", datar[3]);
-                        sqcmd.Parameters.AddWithValue("@NagarID", datar[4]);
-                        sqcmd.Parameters.AddWithValue("@Mobile", datar[5]);
-                        sqcmd.Parameters.AddWithValue("@Mail", datar[6]);
-                        sqcmd.Parameters.AddWithValue("@Dob", datar[7]);
-                        sqcmd.Parameters.AddWithValue("@Blood", datar[8]);
-                        sqcmd.Parameters.AddWithValue("@NvastiID", datar[9]);
-                        sqcmd.Parameters.AddWithValue("@MilanType", datar[10]);
-                        sqcmd.Parameters.AddWithValue("@ShakhaName", datar[11]);
-                        sqcmd.Parameters.AddWithValue("@JobType", datar[12]);
-                        sqcmd.Parameters.AddWithValue("@Business", datar[13]);
-                        sqcmd.Parameters.AddWithValue("@Study", datar[14]);
-                        sqcmd.Parameters.AddWithValue("@SanghSikshan", datar[15]);
-                        sqcmd.Parameters.AddWithValue("@PresentD", datar[16]);
-                        sqcmd.Parameters.AddWithValue("@DSelect", datar[17]);
-                        sqcmd.Parameters.AddWithValue("@Gatividhi", datar[18]);
-                        sqcmd.Parameters.AddWithValue("@Padadhikari", datar[19]);
-                        sqcmd.Parameters.AddWithValue("@Uniform", datar[20]);
-                        sqcmd.Parameters.AddWithValue("@Vadhya", datar[21]);
-                        sqcmd.Parameters.AddWithValue("@SanghPravesh", datar[22]);
-                        sqcmd.Parameters.AddWithValue("@Abhiruchi", datar[23]);
-                        sqcmd.Parameters.AddWithValue("@SelectOrganization", datar[24]);
-                        sqcmd.ExecuteNonQuery().ToString();
-                        DB.Close();
-
-                        dr.Delete();
-                        goto start;
-                    }
-                    else
-                    {
-
+                    //    dr.Delete();
+                    //    goto start;
+                    //}
+                    //else
+                    //{
                         dr["NvastiID"] = _VastiID;
-
-                    }
+                   
+                   // }
 
 
                     _ShakhaID = MasterRepositoryNew.GetShakhaByName(dr["ShakhaName"].ToString()).ToString();
@@ -1976,7 +1971,6 @@ namespace RSS.Controllers
                     else
                     {
                         dr["ShakhaName"] = _ShakhaID;
-
                     }
 
                     _mobile = MasterRepositoryNew.GetMobile(dr["Mobile"].ToString()).ToString();
@@ -1988,14 +1982,12 @@ namespace RSS.Controllers
                     else
                     {
                         dr["Mobile"] = _mobile;
-
                     }
 
 
                     _MilanType = MasterRepositoryNew.GetMTypeByName(dr["MilanType"].ToString()).ToString();
                     if (_MilanType == "0" && _MilanType == null)
                     {
-
                         var datar = dr.ItemArray;
                         DB.Open();
                         string wquery = "INSERT INTO YadiWrong ([Name],[FatherName],[Surname],[BhagID],[NagarID],[Mobile],[Mail],[Dob],[Blood],[NvastiID],[MilanType],[ShakhaName],[JobType],[Business],[Study],[SanghSikshan],[PresentD],[DSelect],[Gatividhi],[Padadhikari],[Uniform],[Vadhya],[SanghPravesh],[Abhiruchi],[SelectOrganization]) VALUES (@Name,@FatherName,@Surname,@BhagID,@NagarID,@Mobile,@Mail,@Dob,@Blood,@NvastiID,@MilanType,@ShakhaName,@JobType,@Business,@Study,@SanghSikshan,@PresentD,@DSelect,@Gatividhi,@Padadhikari,@Uniform,@Vadhya,@SanghPravesh,@Abhiruchi,@SelectOrganization)";
@@ -2034,7 +2026,6 @@ namespace RSS.Controllers
                     else
                     {
                         dr["MilanType"] = _MilanType;
-
                     }
 
                 start:
@@ -2050,9 +2041,6 @@ namespace RSS.Controllers
             objbulk.WriteToServer(dt);
             DB.Close();
 
-            //  DB.Open();
-            //_objbulk.WriteToServer(dtNotMatchRecord);
-            //  DB.Close();
         }
 
         public ActionResult ExportExcel()
@@ -2080,7 +2068,26 @@ namespace RSS.Controllers
 
             return RedirectToAction("MSevavasti");
         }
-        
+
+
+        public ActionResult Createyadi()
+        {
+            var model = new Result();
+            if (Session["UID"] != null)
+            {
+                model.UserDetail = AccountRepository.GetuserDetail(Convert.ToInt32(Session["UID"]));
+                model.ListBhag = MasterRepository.GetListBhag();
+                model.ListYadis = MasterRepositoryNew.GetListYadi();
+                model.WrongYadis = MasterRepositoryNew.GetListWrongYadi();
+
+            }
+            else
+            {
+                return RedirectToAction("LogOff", "Account");
+            }
+            return View(model);
+        }
+
 
 
         #endregion
